@@ -24,4 +24,6 @@ content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3001/products/db1414f4-7e87-4dd0-9673-9195fc57385a
+//DELETE http://localhost:3001/products/db1414f4-7e87-4dd0-9673-9195fc57385a
+
+DELETE https://expressjsonrocket.onrender.com/products/eddd9b2f-0ea6-40e8-a487-a7406b08c611
