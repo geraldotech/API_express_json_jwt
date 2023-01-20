@@ -10,7 +10,7 @@ const port = 3001;
 
 const app = express();
 app.use(express.json());
-//app.use(cors());
+app.use(cors());
 
 let products = [];
 //render html
@@ -39,7 +39,7 @@ app.post("/products", (req, res) => {
 });
 //cors para get only
 /*
-sem cors mesmo na same origin não funciona
+sem cors mesmo na same origin não funciona 
 */
 app.get("/products", cors(), (req, res) => {
   return res.json(products);
@@ -60,6 +60,8 @@ app.get("/", (req, res) => {
   //res.send("home page!");
   res.render("index");
 });
+
+//app.get("")
 
 app.put("/products/:id", (req, res) => {
   const { id } = req.params;
