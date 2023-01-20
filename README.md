@@ -1,4 +1,6 @@
-## :rocket: How to run:
+CRUD server + Forms usando FormData + Ajax
+
+## :rocket: Usage:
 
 ```js
 # Install REST Client for VSCode
@@ -12,7 +14,7 @@
 
 [https://www.youtube.com/watch?v=fm4_EuCsQwg](https://www.youtube.com/watch?v=fm4_EuCsQwg)
 
-## about cors
+## About cors:
 
 [https://expressjs.com/en/resources/middleware/cors.html](https://expressjs.com/en/resources/middleware/cors.html)
 
