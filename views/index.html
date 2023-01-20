@@ -44,7 +44,7 @@
       const ajaxn = new XMLHttpRequest();
       const data = new FormData(form);
       data.append("referer", "https://example.com");
-      ajaxn.open("POST", "https://expressjsonrocket.onrender.com//products");
+      ajaxn.open("POST", "https://expressjsonrocket.onrender.com/products");
       ajaxn.setRequestHeader("content-Type", "application/json");
       var json = JSON.stringify(Object.fromEntries(data));
       ajaxn.send(json);
