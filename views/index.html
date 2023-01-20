@@ -37,28 +37,40 @@
       <input type="submit" value="Send" />
     </form>
     <a href="" id="get" target="_blank"></a>
+
+    <hr />
+    <h2>e.g fetch content from Node Server</h2>
+    <div id="root"></div>
+
+    <div class="container"></div>
+    <div id="id"></div>
   </body>
   <script>
     //define BASE_url
-    const baseURL = "https://expressjsonrocket.onrender.com/products/";
-    document.getElementById("base").href = baseURL;
-    document.getElementById("base").innerHTML = baseURL;
+    //const baseURL = "https://expressjsonrocket.onrender.com/products/";
+    const baseURL = "http://localhost:3001/products/";
+    const baseHome = baseURL + "products";
+    document.getElementById("base").href = baseHome;
+    document.getElementById("base").innerHTML = baseHome;
+
     //post
     const form = document.querySelector("#mform");
     form.onsubmit = function (event) {
-      event.preventDefault();
+      //event.preventDefault();
       const ajaxn = new XMLHttpRequest();
       const data = new FormData(form);
       ajaxn.open("POST", baseURL);
       ajaxn.setRequestHeader("content-Type", "application/json");
       const json = JSON.stringify(Object.fromEntries(data));
       ajaxn.send(json);
+      if (ajaxn.readyState == XMLHttpRequest.DONE) {
+        form.reset();
+      }
     };
     // DELETE
     const formdel = document.querySelector("#mformdel");
 
     formdel.onsubmit = function (event) {
-      event.preventDefault();
       const ajaxn = new XMLHttpRequest();
       const data = new FormData(formdel);
       console.log(data.get("id"));
@@ -69,6 +81,9 @@
         "application/x-www-form-urlencoded"
       );
       ajaxn.send();
+      if (ajaxn.readyState == XMLHttpRequest.DONE) {
+        form.reset();
+      }
     };
 
     // PUT
@@ -96,5 +111,40 @@
       getlink.href = baseURL + data.get("id");
       getlink.innerHTML = baseURL + data.get("id");
     };
+
+    //fetch
+    const api = baseURL;
+
+    async function getback(url) {
+      try {
+        const req = await fetch(url);
+        const res = await req.json();
+        console.table(res);
+        show(res);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getback(api);
+
+    function show(dados) {
+      const tableHead = document.querySelector("thead");
+      const tableBody = document.querySelector("tbody");
+
+      const headers = ["name", "pro", "id"];
+
+      document
+        .querySelector(".container")
+        .insertAdjacentHTML(
+          "afterend",
+          `<table><tr><th>${dados
+            .map((dados) => Object.values(dados.name).join(""))
+            .join("<tr><td>")}</table>`
+        );
+      document.getElementById("id").innerHTML = dados
+        .map((ele) => `<ul><li>${ele.name} - ${ele.id}</li></ul>`)
+        .join("");
+    }
   </script>
 </html>
