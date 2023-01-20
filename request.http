@@ -1,0 +1,27 @@
+POST http://localhost:3001/products
+content-Type: application/json
+
+//register a new product!
+{
+    "name":"iPhone 23",
+    "price": 6000
+}
+### fetch all
+
+GET http://localhost:3001/products
+
+### fetch by id
+GET http://localhost:3001/products/c6df1db3-aa01-4a35-99b4-b5beb494149c
+
+
+### fetch update
+PUT http://localhost:3001/products/db1414f4-7e87-4dd0-9673-9195fc57385a
+content-Type: application/json
+
+{
+    "name":"iPhone 12",
+    "price": 14.568
+}
+
+###
+DELETE http://localhost:3001/products/db1414f4-7e87-4dd0-9673-9195fc57385a
