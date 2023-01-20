@@ -37,8 +37,11 @@ app.post("/products", (req, res) => {
 
   return res.json(product);
 });
-
-app.get("/products", (req, res) => {
+//cors para get only
+/*
+sem cors mesmo na same origin não funciona
+*/
+app.get("/products", cors(), (req, res) => {
   return res.json(products);
 });
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: dark">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla JavaScript</title>
+  </head>
+  <body>
+    <h2>e.g fetch content from Node Server</h2>
+    <div id="root"></div>
+    <script>
+      /*       fetch("https://expressjsonrocket.onrender.com/products")
+        .then((res) => res.json())
+        .then((resf) => console.log(resf)) ;*/
+
+      const api = "http://localhost:3001/products";
+
+      async function getback(url) {
+        try {
+          const req = await fetch(url);
+          const res = await req.json();
+          console.log(res);
+          show(res);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      getback(api);
+
+      function show(dados) {
+        document.getElementById("root").innerHTML = dados
+          .map((item) => {
+            return `<li>${item.name} - ${item.price}</item>`;
+          })
+          .join("");
+      }
+    </script>
+  </body>
+</html>
