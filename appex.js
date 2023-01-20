@@ -5,7 +5,6 @@ const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
 var bodyParser = require("body-parser");
-
 const port = 3001;
 
 const app = express();
@@ -51,8 +50,10 @@ app.get("/products/:id", (req, res) => {
   return res.json(product);
 });
 
-app.engine("html", require("ejs").renderFile);
-app.set("view engine", "html");
+//app.engine("html", require("ejs").renderFile);
+//app.set("view engine", "html");
+app.set("view engine", "ejs"); //engine irá buscar .ejs
+//app.set('views', './views'); // define a pasta
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "/views"));
 
