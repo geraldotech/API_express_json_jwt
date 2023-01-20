@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <p>incompleto...</p>
+    <form action="http://localhost:3001/products" method="POST">
+      <input name="name" type="text" placeholder="produto" id="name" />
+      <input name="price" type="number" placeholder="price" id="price" />
+      <input type="submit" value="Send" />
+    </form>
+    <script>
+      const myfun = () => {
+        const name = document.querySelector(
+          "input[placeholder='produto']"
+        ).value;
+        const price = document.querySelector(
+          "input[placeholder='price']"
+        ).value;
+      };
+      //onsubmit="event.preventDefault(); return myfun()"
+    </script>
+  </body>
+</html>

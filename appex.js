@@ -62,7 +62,9 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-//app.get("")
+app.get("/public/methods", (req, res) => {
+  res.render("methods");
+});
 
 app.put("/products/:id", (req, res) => {
   const { id } = req.params;
