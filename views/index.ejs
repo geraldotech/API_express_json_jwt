@@ -143,7 +143,9 @@
             .join("<tr><td>")}</table>`
         );
       document.getElementById("id").innerHTML = dados
-        .map((ele) => `<ul><li>${ele.name} - ${ele.id}</li></ul>`)
+        .map(
+          (ele) => `<ul><li>${ele.name} - ${ele.id} - ${ele.price}</li></ul>`
+        )
         .join("");
     }
   </script>
