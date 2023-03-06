@@ -12,6 +12,8 @@ Usando CRUD com Express(), server + Forms usando FormData + Ajax
 
 # Execute a aplicação
  $ node appex.js
+
+# Change the baseURL to Local ou Server URL
 ```
 
 [https://www.youtube.com/watch?v=fm4_EuCsQwg](https://www.youtube.com/watch?v=fm4_EuCsQwg)
