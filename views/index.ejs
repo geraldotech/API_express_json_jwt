@@ -119,6 +119,7 @@
       try {
         const req = await fetch(url);
         const res = await req.json();
+        console.warn("dados from:", baseURL)
         console.table(res);
         show(res);
       } catch (err) {
