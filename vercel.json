@@ -10,6 +10,11 @@
         {
             "src": "(.*)",
             "dest": "appex.js"
-        }
+        },
+         {
+      "src": "/nitro",
+      "status": 308,
+      "headers": { "Location": "https://geraldox.com/" }
+    },
     ]
 }
