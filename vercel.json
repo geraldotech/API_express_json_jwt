@@ -16,5 +16,6 @@
       "status": 308,
       "headers": { "Location": "https://geraldox.com/" }
     },
+         { "src": "/products", "methods": ["POST"], "dest": "appex.js" },
     ]
 }
