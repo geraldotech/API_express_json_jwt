@@ -11,6 +11,10 @@
             "src": "(.*)",
             "dest": "appex.js"
         },
+        {
+            "src" "/logi",
+            "dest":"/home.html"
+        },
          {
       "src": "/nitro",
       "status": 308,
