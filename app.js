@@ -7,6 +7,7 @@ const path = require("path");
 var bodyParser = require("body-parser");
 const port = 3001;
 
+
 const app = express();
 app.use(express.json());
 
@@ -44,10 +45,9 @@ app.post("/products", (req, res) => {
   return res.json(product);
 });
 //cors para get only
-/*
-sem cors mesmo na same origin não funciona 
-*/
+/* sem cors mesmo na same origin não funciona  */
 app.get("/products", cors(), (req, res) => {
+  //return res.json(products);
   return res.json(products);
 });
 
@@ -68,7 +68,7 @@ app.set("views", path.join(__dirname, "/views"));
 
 app.get("/", (req, res) => {
   //res.send("home page!");
-  res.render("index");
+  res.render("index", {info: 'Example express API'});
 });
 
 app.get("/public/methods", (req, res) => {

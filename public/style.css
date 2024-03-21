@@ -1,3 +1,11 @@
+body{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header{
+  text-align: center;
+}
+
 input{
   border: none;
   padding: .5rem;

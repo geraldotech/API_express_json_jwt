@@ -5,13 +5,13 @@ Usando CRUD com Express(), server + Forms usando FormData + Ajax
 ## :rocket: Usage:
 
 ```js
-# Install REST Client for VSCode
+# Install REST Client for VSCode to test methods
 
 # Instale as dependências
     $ npm install
 
 # Execute a aplicação
- $ node appex.js
+ $ node app.js
 
 # Change the baseURL to Local ou Server URL
 ```
