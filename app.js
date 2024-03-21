@@ -9,6 +9,8 @@ const port = 3001;
 
 const app = express();
 app.use(express.json());
+
+// Enable CORS globally for all routes
 app.use(cors());
 
 let products = [];
