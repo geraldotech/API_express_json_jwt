@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
+
+   <p>
+    <button onclick="getback()">try fetch posts by localhost url</button>
+    check console.log after click
+   </p>
+
     BASEURL: <a id="base" target="_blank"></a>
     <h2>Method: POST</h2>
     <form id="mform" method="POST">
@@ -47,8 +53,7 @@
   </body>
   <script>
     //define BASE_url
-   //const baseURL = "https://expressjsonrocket.onrender.com/products/";
-    const baseURL = "http://localhost:3001/products";
+    const baseURL = "https://api.gpdev.tech/products";
    
 
     document.getElementById("base").href = baseURL;
@@ -150,5 +155,21 @@
         )
         .join("");
     }
+
+
+    /* fetch local host */
+const apiLocal = "http://localhost:3001/products";
+
+async function getback(url = apiLocal) {
+  try {
+    const req = await fetch(url);
+    const res = await req.json();
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
   </script>
 </html>
