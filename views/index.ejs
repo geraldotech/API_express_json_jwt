@@ -109,6 +109,7 @@
       const json = JSON.stringify(Object.fromEntries(data))
       ajaxn.send(json)
       if (ajaxn.readyState == XMLHttpRequest.DONE) {
+        console.log(`Produto cadastrado`)
         form.reset()
       }
     }
@@ -124,7 +125,8 @@
       ajaxn.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
       ajaxn.send()
       if (ajaxn.readyState == XMLHttpRequest.DONE) {
-        form.reset()
+        console.log(`Produto deletado`)
+        formdel.reset()
       }
     }
 
@@ -140,6 +142,10 @@
       ajaxn.setRequestHeader('content-Type', 'application/json')
       const json = JSON.stringify(Object.fromEntries(data))
       ajaxn.send(json)
+      if (ajaxn.readyState == XMLHttpRequest.DONE) {
+        formPU.reset()
+        console.log(`Produto alterado`)
+      }
     }
 
     //GET
