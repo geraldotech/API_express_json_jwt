@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors({
-//  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
+  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
  // allowedHeaders: ['Content-Type'], // Allow only specified headers
 }));
 
@@ -54,7 +54,8 @@ app.get("/products", cors(), (req, res) => {
 app.get("/products/:id", (req, res) => {
   const { id } = req.params;
   const product = products.find((product) => product.id === id);
-  return res.json(product);
+  //return res.json(product);
+  return res.render("single.ejs", {product});
 });
 
 // === view engine setup === 
@@ -62,18 +63,21 @@ app.get("/products/:id", (req, res) => {
 //app.engine("html", require("ejs").renderFile);
 //app.set("view engine", "html");
 app.set("view engine", "ejs"); //engine irá buscar .ejs
-//app.set('views', './views'); // define a pasta
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "/views"));
 
+
+/* == set pages == */
+
 app.get("/", (req, res) => {
   //res.send("home page!");
-  res.render("index", {info: 'Example express API'});
+  res.render("index.ejs", {info: 'Example express API'});
 });
 
-app.get("/public/methods", (req, res) => {
+app.get("/methods", (req, res) => {
   res.render("methods");
 });
+
 
 app.put("/products/:id", (req, res) => {
   const { id } = req.params;

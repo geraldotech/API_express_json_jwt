@@ -1,27 +1,27 @@
-Usando CRUD com Express(), server + Forms usando FormData + Ajax
+# CRUD com Express() server +  FormData + Ajax
 
-## [Live Demo https://expressjsonrocket.onrender.com/](https://expressjsonrocket.onrender.com/)
+## [Live Demo](https://api.gpdev.tech/)
 
-## :rocket: Usage:
+## :rocket: usage:
 
 ```js
-# Install REST Client for VSCode to test methods
-
-# Instale as dependências
+# install dependencies
     $ npm install
 
 # Execute a aplicação
  $ node app.js
 
-# Change the baseURL to Local ou Server URL
-```
+# set BASEUrl Production or Dev
 
-[https://www.youtube.com/watch?v=fm4_EuCsQwg](https://www.youtube.com/watch?v=fm4_EuCsQwg)
+# Install REST Client for VSCode to test methods
+
+# set cors origin 
+```
+# Routers:
+
+- /products
 
 ## About cors:
 
 [https://expressjs.com/en/resources/middleware/cors.html](https://expressjs.com/en/resources/middleware/cors.html)
-
-# Routers:
-
-- /products
+[REF](https://www.youtube.com/watch?v=fm4_EuCsQwg)
