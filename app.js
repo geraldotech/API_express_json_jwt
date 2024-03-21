@@ -11,7 +11,13 @@ const app = express();
 app.use(express.json());
 
 // Enable CORS globally for all routes
-app.use(cors());
+//app.use(cors());
+
+
+// Or enable CORS for specific routes
+app.get('https://api.gpdev.tech', cors(), (req, res) => {
+  // Your route logic here
+});
 
 let products = [];
 //render html
