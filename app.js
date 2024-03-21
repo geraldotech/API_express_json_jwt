@@ -10,14 +10,10 @@ const port = 3001;
 const app = express();
 app.use(express.json());
 
-// Enable CORS globally for all routes
-//app.use(cors());
-
-
-// Or enable CORS for specific routes
-app.get('https://api.gpdev.tech', cors(), (req, res) => {
-  // Your route logic here
-});
+app.use(cors({
+  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
+  allowedHeaders: ['Content-Type'], // Allow only specified headers
+}));
 
 let products = [];
 //render html
