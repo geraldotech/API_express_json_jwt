@@ -10,9 +10,12 @@ const port = 3001;
 const app = express();
 app.use(express.json());
 
+// Set the public folder as the location for static files
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(cors({
-  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
-  allowedHeaders: ['Content-Type'], // Allow only specified headers
+//  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
+ // allowedHeaders: ['Content-Type'], // Allow only specified headers
 }));
 
 let products = [];
@@ -53,6 +56,8 @@ app.get("/products/:id", (req, res) => {
   const product = products.find((product) => product.id === id);
   return res.json(product);
 });
+
+// === view engine setup === 
 
 //app.engine("html", require("ejs").renderFile);
 //app.set("view engine", "html");

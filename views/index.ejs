@@ -7,6 +7,8 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
+    <title>Express API</title>
+    <link rel="stylesheet" href="/public/style.css">
   </head>
   <body>
     <p>
@@ -18,7 +20,7 @@
     <a
       id="base"
       target="_blank"></a>
-    <h2>Method: POST</h2>
+    <h2>POST</h2>
     <form
       id="mform"
       method="POST">
@@ -37,8 +39,10 @@
 
     <hr />
 
-    <h2>Method: Delete</h2>
-    <form id="mformdel">
+    <h2>Delete</h2>
+    <form
+      id="mformdel"
+      method="DELETE">
       <input
         name="id"
         type="text"
@@ -50,7 +54,7 @@
 
     <hr />
 
-    <h2>Method: PUT</h2>
+    <h2>PUT</h2>
     <form id="mformPU">
       <input
         name="id"
@@ -68,8 +72,39 @@
         type="submit"
         value="Send" />
     </form>
+
+    <h2>PUT item:</h2>
+    <form
+      action="GET"
+      id="getSingle">
+      <input
+        type="text"
+        name="itemid"
+        placeholder="enter id product" />
+      <input
+        type="submit"
+        value="Get Item" />
+    </form>
+
+    <fieldset>
+      <legend>Edit Item:</legend>
+      <form
+        action="PUT"
+        id="putSingle">
+        <input
+          type="text"
+          id="itemName" />
+        <input
+          type="text"
+          id="itemPrice" />
+        <input
+          type="submit"
+          value="Save" />
+      </form>
+    </fieldset>
+
     <hr />
-    <h2>Method: GET</h2>
+    <h2>GET</h2>
     <form id="mformGet">
       <input
         name="id"
@@ -91,111 +126,5 @@
     <div class="container"></div>
     <div id="id"></div>
   </body>
-  <script>
-    //define BASE_url https://api.gpdev.tech
-    const baseURL = ' https://api.gpdev.tech/products'
-   
-    document.getElementById('base').href = baseURL
-    document.getElementById('base').innerHTML = baseURL
-
-    //post
-    const form = document.querySelector('#mform')
-    form.onsubmit = function (event) {
-      event.preventDefault()
-      const ajaxn = new XMLHttpRequest()
-      const data = new FormData(form)
-      ajaxn.open('POST', baseURL)
-      ajaxn.setRequestHeader('content-Type', 'application/json')
-      const json = JSON.stringify(Object.fromEntries(data))
-      ajaxn.send(json)
-      if (ajaxn.readyState == XMLHttpRequest.DONE) {
-        console.log(`Produto cadastrado`)
-        form.reset()
-      }
-    }
-    // DELETE
-    const formdel = document.querySelector('#mformdel')
-
-    formdel.onsubmit = function (event) {
-      const ajaxn = new XMLHttpRequest()
-      const data = new FormData(formdel)
-      console.log(data.get('id'))
-
-      ajaxn.open('DELETE', baseURL + data.get('id'))
-      ajaxn.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-      ajaxn.send()
-      if (ajaxn.readyState == XMLHttpRequest.DONE) {
-        console.log(`Produto deletado`)
-        formdel.reset()
-      }
-    }
-
-    // PUT
-
-    const formPU = document.querySelector('#mformPU')
-    formPU.onsubmit = function (event) {
-      event.preventDefault()
-      const ajaxn = new XMLHttpRequest()
-      const data = new FormData(formPU)
-      console.log(data.get('id'))
-      ajaxn.open('PUT', baseURL + data.get('id'))
-      ajaxn.setRequestHeader('content-Type', 'application/json')
-      const json = JSON.stringify(Object.fromEntries(data))
-      ajaxn.send(json)
-      if (ajaxn.readyState == XMLHttpRequest.DONE) {
-        formPU.reset()
-        console.log(`Produto alterado`)
-      }
-    }
-
-    //GET
-    const formGet = document.querySelector('#mformGet')
-    formGet.onclick = function (event) {
-      event.preventDefault()
-
-      const data = new FormData(formGet)
-      console.log(data.get('id'))
-      const getlink = document.getElementById('get')
-      getlink.href = baseURL + data.get('id')
-      getlink.innerHTML = baseURL + data.get('id')
-    }
-
-    //fetch
-
-    async function fetchToShowinDOM(url) {
-      try {
-        const req = await fetch(url)
-        const res = await req.json()
-        console.warn('dados from:', baseURL)
-        console.table(res)
-        domHanlder(res)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fetchToShowinDOM(baseURL)
-
-    function domHanlder(dados) {
-      const tableHead = document.querySelector('thead')
-      const tableBody = document.querySelector('tbody')
-
-      const headers = ['name', 'pro', 'id']
-
-      document.querySelector('.container').insertAdjacentHTML('afterend', `<table><tr><th>${dados.map((dados) => Object.values(dados.name).join('')).join('<tr><td>')}</table>`)
-      document.getElementById('id').innerHTML = dados.map((ele) => `<ul><li>${ele.name} - ${ele.id} - ${ele.price}</li></ul>`).join('')
-    }
-
-    /* fetch local host */
-    const apiLocal = 'http://localhost:3001/products'
-
-    async function tryFetchLocalHost(url = apiLocal) {
-      try {
-        const req = await fetch(url)
-        const res = await req.json()
-        console.warn(res)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  </script>
+  <script src="./public/main.js"></script>
 </html>
