@@ -1,0 +1,28 @@
+POST https://api.gpdev.tech/products
+content-Type: application/json
+
+//register a new product!
+{
+    "name":"iPhone 1223",
+    "price": 6000
+}
+### fetch all
+
+GET https://api.gpdev.tech/products
+
+### fetch by id
+GET https://api.gpdev.tech/products/4cf79fd6-3041-47b6-bc91-0bdb93fa96ab
+
+
+### fetch update
+PUT https://api.gpdev.tech/products/4cf79fd6-3041-47b6-bc91-0bdb93fa96ab
+content-Type: application/json
+
+{
+    "name":"iPhone 12",
+    "price": 14.568
+}
+
+###
+
+DELETE https://api.gpdev.tech/products/6ca52a41-4748-415a-9dac-2ec31c37a355

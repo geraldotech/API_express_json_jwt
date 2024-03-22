@@ -1,25 +1,16 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "appex.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "(.*)",
-            "dest": "appex.js"
-        },
-        {
-            "src" "/login",
-            "dest":"/home.html"
-        },
-         {
-      "src": "/nitro",
-      "status": 308,
-      "headers": { "Location": "https://geraldox.com/" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "(.*)",
+      "dest": "app.js"
     },
     { "src": "/pc", "dest": "https://geraldox.com/" }
-    ]
+  ]
 }
