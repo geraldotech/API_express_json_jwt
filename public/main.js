@@ -46,7 +46,7 @@ formdel.onsubmit = function (event) {
       // Get and convert the responseText into JSON
       console.log(`produto DELETADO`)
       // reset form
-      form.reset()
+      formdel.reset()
     }
   }
 }

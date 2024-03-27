@@ -11,13 +11,14 @@ const port = 3001;
 const app = express();
 app.use(express.json());
 
+app.use(cors({
+  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
+ // allowed Headers: ['Content-Type'], // Allow only specified headers
+}));
+
 // Set the public folder as the location for static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors({
-  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
- // allowedHeaders: ['Content-Type'], // Allow only specified headers
-}));
 
 let products = [];
 //render html
@@ -47,7 +48,6 @@ app.post("/products", (req, res) => {
 //cors para get only
 /* sem cors mesmo na same origin não funciona  */
 app.get("/products", cors(), (req, res) => {
-  //return res.json(products);
   return res.json(products);
 });
 

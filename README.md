@@ -9,7 +9,7 @@
     $ npm install
 
 # Execute a aplicação
- $ node app.js
+ $ npm run dev
 
 # set BASEUrl Production or Dev
 
