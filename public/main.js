@@ -18,9 +18,12 @@ form.onsubmit = function (event) {
 
   ajaxn.onload = function (e) {
     // Check if the request was a success
+
     if (this.readyState === XMLHttpRequest.DONE) {
       // Get and convert the responseText into JSON
+
       console.log(`cadastrado com sucesso!`)
+
       // reset form
       form.reset()
     }
@@ -28,8 +31,6 @@ form.onsubmit = function (event) {
 }
 // DELETE
 const formdel = document.querySelector('#mformdel')
-// antes de seletar
-// preencher os inputs do form
 
 formdel.onsubmit = function (event) {
   event.preventDefault()
@@ -41,8 +42,10 @@ formdel.onsubmit = function (event) {
   ajaxn.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
   ajaxn.send()
   ajaxn.onload = function (e) {
+
     // Check if the request was a success
     if (this.readyState === XMLHttpRequest.DONE) {
+
       // Get and convert the responseText into JSON
       console.log(`produto DELETADO`)
 
@@ -62,7 +65,7 @@ formPU.onsubmit = function (event) {
   event.preventDefault()
   const ajaxn = new XMLHttpRequest()
   const data = new FormData(formPU)
-  console.log(data.get('id'))
+  //console.log(data.get('id'))
   ajaxn.open('PUT', baseURL + data.get('id'))
   ajaxn.setRequestHeader('content-Type', 'application/json')
   const json = JSON.stringify(Object.fromEntries(data))
@@ -91,7 +94,7 @@ async function fetchToShowinDOM(url) {
   try {
     const req = await fetch(url)
     const res = await req.json()
-    console.warn('dados from:', baseURL)
+    console.warn('baseURL: ', baseURL)
     //  console.table(res)
     domHandler(res)
   } catch (err) {
@@ -101,17 +104,26 @@ async function fetchToShowinDOM(url) {
 fetchToShowinDOM(baseURL)
 
 function domHandler(dados) {
-  const tableHead = document.querySelector('thead')
-  const tableBody = document.querySelector('tbody')
 
-  const headers = ['name', 'pro', 'id']
+  document.querySelector('.container').insertAdjacentHTML('afterend', `
+  <table>
+  
+  <tr>
+    ${dados.map((dados) => Object.values(dados.name).join('')).join('<tr><td>')}
+  </table>
+  `)
 
-  document.querySelector('.container').insertAdjacentHTML('afterend', `<table><tr><th>${dados.map((dados) => Object.values(dados.name).join('')).join('<tr><td>')}</table>`)
+
   document.getElementById('allItems').innerHTML = dados
     .map(
-      (ele) => `<ul>
-   <li>Name: <a href="/products/post/${ele.id}" target="_blank">${ele.name}</a>  ID:<span id="singleid">${ele.id}</span> Price: ${ele.price}</li>
-   </ul>`
+      (ele) => 
+    `
+    <div class="card">
+   <h2><a href="/products/post/${ele.id}" target="_blank">${ele.name}</a></h2>
+   <p class="itemid">ID:<span id="singleid">${ele.id}</span></p>
+   <p>Price: ${ele.price}</p>
+   </div>
+    `
     )
     .join('')
 }
@@ -129,7 +141,7 @@ async function tryFetchLocalHost(url = apiLocal) {
   }
 }
 
-/* == GET single === edit and send */
+/* === GET single === edit and send */
 
 let getSingle = document.querySelector('#getSingle')
 const putSingle = document.querySelector('#putSingle')
@@ -141,11 +153,12 @@ getSingle.onsubmit = function (event) {
   itemPrice = document.querySelector('#itemPrice')
 
   event.preventDefault()
-  console.log(`okok`)
   const data = new FormData(getSingle)
   const { itemid } = Object.fromEntries(data)
   urlSingle = `${baseURL}${itemid}`
+
   console.log(urlSingle)
+
   fetch(urlSingle)
     .then((req) => req.json())
     .then((data) => {
@@ -169,12 +182,18 @@ putSingle.onsubmit = (e) => {
   const json = JSON.stringify(data)
   ajaxn.send(json)
   ajaxn.onload = function () {
+
     // Check if the request was a success
     if (this.readyState === XMLHttpRequest.DONE) {
+
       // Get and convert the responseText into JSON
       console.log(`Produto alterado com sucesso!`)
+
       // reset form
       putSingle.reset()
+
+        // update DOM products list
+        fetchToShowinDOM(baseURL)
     }
   }
 }
