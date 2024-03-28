@@ -106,7 +106,7 @@ function domHanlder(dados) {
   document.getElementById('allItems').innerHTML = dados
     .map(
       (ele) => `<ul>
-   <li>Name: <a href="/products/${ele.id}" target="_blank">${ele.name}</a>  ID:<span id="singleid">${ele.id}</span> Price: ${ele.price}</li>
+   <li>Name: <a href="/products/post/${ele.id}" target="_blank">${ele.name}</a>  ID:<span id="singleid">${ele.id}</span> Price: ${ele.price}</li>
    </ul>`
     )
     .join('')
@@ -137,6 +137,7 @@ getSingle.onsubmit = function (event) {
   itemPrice = document.querySelector('#itemPrice')
 
   event.preventDefault()
+  console.log(`okok`)
   const data = new FormData(getSingle)
   const { itemid } = Object.fromEntries(data)
   urlSingle = `${baseURL}${itemid}`
@@ -144,6 +145,7 @@ getSingle.onsubmit = function (event) {
   fetch(urlSingle)
     .then((req) => req.json())
     .then((data) => {
+      console.log(data)
       itemName.value = data.name
       itemPrice.value = data.price
     })

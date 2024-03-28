@@ -54,7 +54,17 @@ app.get("/products", cors(), (req, res) => {
 app.get("/products/:id", (req, res) => {
   const { id } = req.params;
   const product = products.find((product) => product.id === id);
-  //return res.json(product);
+  return res.json(product);
+
+  // if you return this file as template, will broken single router json
+  //return res.render("single.ejs", {product});
+});
+
+// handle post + template html
+app.get("/products/post/:id", (req, res) => {
+  const { id } = req.params;
+  const product = products.find((product) => product.id === id);
+
   return res.render("single.ejs", {product});
 });
 
