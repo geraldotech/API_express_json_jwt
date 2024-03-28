@@ -5,7 +5,7 @@ const baseURL = Production ? 'https://api.gpdev.tech/products/' : 'http://localh
 document.getElementById('base').href = baseURL
 document.getElementById('base').innerHTML = baseURL
 
-// post
+// POST
 const form = document.querySelector('#mform')
 form.onsubmit = function (event) {
   event.preventDefault()
@@ -45,8 +45,12 @@ formdel.onsubmit = function (event) {
     if (this.readyState === XMLHttpRequest.DONE) {
       // Get and convert the responseText into JSON
       console.log(`produto DELETADO`)
+
       // reset form
       formdel.reset()
+
+      // update DOM products list
+      fetchToShowinDOM(baseURL)
     }
   }
 }
@@ -69,7 +73,7 @@ formPU.onsubmit = function (event) {
   }
 }
 
-//GET
+//GET single router
 const formGet = document.querySelector('#mformGet')
 formGet.onclick = function (event) {
   event.preventDefault()
@@ -77,7 +81,7 @@ formGet.onclick = function (event) {
   const data = new FormData(formGet)
   console.log(data.get('id'))
   const getlink = document.getElementById('get')
-  getlink.href = baseURL + data.get('id')
+  getlink.href = `${baseURL}/post/` + data.get('id')
   getlink.innerHTML = baseURL + data.get('id')
 }
 
@@ -89,14 +93,14 @@ async function fetchToShowinDOM(url) {
     const res = await req.json()
     console.warn('dados from:', baseURL)
     //  console.table(res)
-    domHanlder(res)
+    domHandler(res)
   } catch (err) {
     console.log(err)
   }
 }
 fetchToShowinDOM(baseURL)
 
-function domHanlder(dados) {
+function domHandler(dados) {
   const tableHead = document.querySelector('thead')
   const tableBody = document.querySelector('tbody')
 

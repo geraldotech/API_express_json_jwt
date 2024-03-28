@@ -5,8 +5,13 @@ function getidsingle() {
     i.addEventListener('click', (e) => {
       
       const copy = e.target.textContent
-      navigator.clipboard.writeText(copy).then(() => {
-        alert('copiado')
+      const eventEl = e.target
+      navigator.clipboard.writeText(copy).then((e) => {
+        // clean eventEl color
+        eventEl.style.color = 'green'
+        setTimeout(() => {
+          eventEl.style.color = ''
+        }, 1000)
       })
     })
   }
