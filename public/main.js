@@ -106,7 +106,7 @@ function domHanlder(dados) {
   document.getElementById('allItems').innerHTML = dados
     .map(
       (ele) => `<ul>
-   <li>Name: <a href="/products/${ele.id}" target="_blank">${ele.name}</a>  ID:<span id="singleid"> ${ele.id}</span> Price: ${ele.price}</li>
+   <li>Name: <a href="/products/${ele.id}" target="_blank">${ele.name}</a>  ID:<span id="singleid">${ele.id}</span> Price: ${ele.price}</li>
    </ul>`
     )
     .join('')

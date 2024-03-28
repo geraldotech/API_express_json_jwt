@@ -3,7 +3,7 @@ content-Type: application/json
 
 //register a new product!
 {
-    "name":"iPhone 1223",
+    "name":"from my vscode extension",
     "price": 6000
 }
 ### fetch all
