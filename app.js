@@ -14,12 +14,11 @@ const app = express()
 
 /*  === app use === */
 
+
+// Parse URL-encoded bodies with extended syntax
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.json())
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-)
 app.use(cookieParser())
 
 app.use(
@@ -74,7 +73,7 @@ app.get('/', isAuth, (req, res, next) => {
     res.render('index.ejs', { auth: true, info: 'Express API, cors, ejs' })
   } else {
   } */
-  res.render('index.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT' })
+  res.render('home.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT' })
 })
 
 app.get('/dashboard', verifyJWT, (req, res) => {
@@ -92,6 +91,11 @@ app.get('/products/post/:id', isAuth, (req, res, next) => {
   const { id } = req.params
   const product = products.find((product) => product.id === id)
 
+  if(!product){
+    // maybe visite same single and return a 404 status
+    // or create a 404 page
+   return  res.send(`404 product not found!`)
+  }
   return res.render('single.ejs', { product, auth: req.isAuthenticated })
 })
 
@@ -102,7 +106,9 @@ app.get('/products', (req, res) => {
 app.get('/products/:id', (req, res) => {
   const { id } = req.params
   const product = products.find((product) => product.id === id)
+
   return res.json(product)
+
 
   // if you return this file as template, will broken single router json
   //return res.render("single.ejs", {product});
@@ -167,28 +173,32 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
 
 // JWT authentication
 app.post('/login', (req, res, next) => {
-  console.log(req.body)
+  const { user, pwd } = req.body;
+  console.log(user)
+
   //esse teste abaixo deve ser feito no seu banco de dados
   if (req.body.user === 'geraldo' && req.body.pwd === '123') {
     //auth ok
     const id = 1 //esse id viria do banco de dados
     const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 30, // expires in 5min 300
+      expiresIn: 5, // expires in 5min 300
     })
     // Store the token in the session
     req.session.token = token
 
     // return res.json({ auth: true, token: token })
 
-    // Redirect the user to the dashboard with additional data
-   // return res.redirect(302, `/dashboard?userId=${id}`)
-   return res.status(200).json({ auth: true, token });
+    // Redirect the user to the dashboard with additional  res.redirect(302, `/dashboard?userId=${id}`)data
+    return
+
+   // handle post form
+   //return res.status(200).json({ auth: true, token });
 
 
   }
 
   //res.status(500).json({ message: 'Login inválido!' })
-  res.status(401).json({ message: 'Login inválido!' })
+  res.status(401).json({ message: 'Login ou senha inválido!' })
 })
 
 app.get('/logout', function (req, res) {
@@ -239,7 +249,7 @@ function verifyJWT(req, res, next) {
   if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' })
 
   jwt.verify(token, process.env.SECRET, function (err, decoded) {
-    if (err) return res.status(500).send({ auth: false, message: 'Token inválido.' })
+    if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
 
     req.userId = decoded.id
 

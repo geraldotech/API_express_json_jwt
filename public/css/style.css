@@ -1,3 +1,9 @@
+
+
+header, nav, html, body{
+  margin: 0;
+}
+
 body{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -9,6 +15,15 @@ header{
 input, button{
   border: 1px solid #fff;
   padding: .5rem;
+}
+
+
+/* Navbar */
+
+.topmenu{
+  padding: 1rem;
+  background: #333;
+ 
 }
 
 /* Home Page */
@@ -44,4 +59,14 @@ input, button{
 
 .card {
   margin: 5px;
+}
+
+/* Login */
+#errorMessage{
+  display: none;
+}
+
+.single.login{
+  background-color: #333;
+  padding: 1rem;
 }

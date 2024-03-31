@@ -13,21 +13,39 @@ form.onsubmit = function (event) {
   const data = new FormData(form)
   ajaxn.open('POST', baseURL)
   ajaxn.setRequestHeader('content-Type', 'application/json')
+  // or no json xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   const json = JSON.stringify(Object.fromEntries(data))
-  ajaxn.send(json)
 
   ajaxn.onload = function (e) {
     // Check if the request was a success
-
     if (this.readyState === XMLHttpRequest.DONE) {
       // Get and convert the responseText into JSON
-
-      console.log(`cadastrado com sucesso!`)
-
+      console.log('Request was a success');
       // reset form
       form.reset()
     }
+
+    // erros
+
+    console.log(ajaxn.status)
+    if (ajaxn.status === 0) {
+      console.log(`usuario fazer login novamente`)
+      console.log(ajaxn)
+    }
+   
+    if (ajaxn.status === 500) {
+      const errorResponse = JSON.parse(ajaxn.responseText)
+      console.error('Internal Server Error:', errorResponse.message)
+      alert(errorResponse.message)
+      setTimeout(() => window.location = '/login', 1000)
+    }
   }
+  ajaxn.onerror = function () {
+    // Network error
+    console.error('Network Error')
+  }
+
+  ajaxn.send(json)
 }
 // DELETE
 const formdel = document.querySelector('#mformdel')
@@ -42,18 +60,16 @@ formdel.onsubmit = function (event) {
   ajaxn.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
   ajaxn.send()
   ajaxn.onload = function (e) {
-
     // Check if the request was a success
     if (this.readyState === XMLHttpRequest.DONE) {
-
       // Get and convert the responseText into JSON
-      console.log(`produto DELETADO`)
+      console.log('Request was a success');
 
       // reset form
       formdel.reset()
 
       // update DOM products list if exists
-   //   fetchToShowinDOM(baseURL)
+      //   fetchToShowinDOM(baseURL)
     }
   }
 }
@@ -72,7 +88,7 @@ formPU.onsubmit = function (event) {
   ajaxn.send(json)
   if (ajaxn.readyState == XMLHttpRequest.DONE) {
     formPU.reset()
-    console.log(`Produto alterado`)
+    console.log('Request was a success');
   }
 }
 
@@ -87,7 +103,6 @@ formGet.onclick = function (event) {
   getlink.href = `${baseURL}/post/` + data.get('id')
   getlink.innerHTML = baseURL + data.get('id')
 }
-
 
 /* === GET single === edit and send */
 
@@ -130,21 +145,16 @@ putSingle.onsubmit = (e) => {
   const json = JSON.stringify(data)
   ajaxn.send(json)
   ajaxn.onload = function () {
-
     // Check if the request was a success
     if (this.readyState === XMLHttpRequest.DONE) {
-
       // Get and convert the responseText into JSON
-      console.log(`Produto alterado com sucesso!`)
+      console.log('Request was a success');
 
       // reset form
       putSingle.reset()
 
-        // update DOM products list
-       // fetchToShowinDOM(baseURL)
+      // update DOM products list
+      // fetchToShowinDOM(baseURL)
     }
   }
 }
-
- 
-

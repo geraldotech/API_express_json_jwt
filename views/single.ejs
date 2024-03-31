@@ -11,7 +11,11 @@
   </head>
   <body>
     <h1>Single Page Template</h1>
-   <p>Está logado: <%=  auth %> </p>
+    <div class="single login">
+      <% if (!auth) { %> 
+        <p>Fazer login:<a href="/login">Login</a></p>
+        <%   }  %> 
+    </div>
 
     <p>Product: <%= product.name %> </p>
     <p>Price: <%= product.price %> </p>

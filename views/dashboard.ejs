@@ -8,19 +8,17 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
     <title>Express API</title>
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link
+      rel="stylesheet"
+      href="/public/css/style.css" />
   </head>
   <body>
-   <!--  <p>Está logado? <%- isAuthenticated %> </p> -->
-      <header>
-       <!-- pass auth stat to nav, dashboard only show if user is loggin, so nav no needs this information -->
-       <%- include('navbar', { isAuthenticated: isAuthenticated }); %>
+    <!--  <p>Está logado? <%- isAuthenticated %> </p> -->
+    <header>
+      <!-- pass auth stat to nav, dashboard only show if user is loggin, so nav no needs this information -->
+      <%- include('navbar', { isAuthenticated: isAuthenticated }); %>
+    </header>
 
-
-
-        
-      </header>
-   
     BASEURL:
     <a
       id="base"
@@ -124,11 +122,8 @@
       id="get"
       target="_blank"></a>
 
-
-  <script>
-
-  </script>
-  <script src="./public/js/main.js"></script>
-  <script src="./public/js/copyid.js"></script>
-</body>
+    <script></script>
+    <script src="./public/js/dashboard.js"></script>
+    <script src="./public/js/copyid.js"></script>
+  </body>
 </html>

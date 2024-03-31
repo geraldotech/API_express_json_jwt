@@ -14,13 +14,11 @@
   </head>
   <body>
     <header>
-      <h2><%= header %></h2>
-
       <%- include('navbar', { isAuthenticated: auth }); %>
-
-      <!--   <p>isAuthenticated?: <%= auth %></p> -->
+      <h2><%= header %></h2>
+       <!--  <p>isAuthenticated?: <%= // auth %></p> -->
     </header>
-    
+
     <section id="productsCards"></section>
 
     <div class="container"></div>
