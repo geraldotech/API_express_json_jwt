@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  style="color-scheme: dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Express API</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+  </head>
+  <body>
+   <!--  <p>Está logado? <%- isAuthenticated %> </p> -->
+      <header>
+       <!-- pass auth stat to nav, dashboard only show if user is loggin, so nav no needs this information -->
+       <%- include('navbar', { isAuthenticated: isAuthenticated }); %>
+
+
+
+        
+      </header>
+   
+    BASEURL:
+    <a
+      id="base"
+      target="_blank"></a>
+    <h2>POST</h2>
+    <form
+      id="mform"
+      method="POST">
+      <input
+        name="name"
+        type="text"
+        placeholder="produto" />
+      <input
+        name="price"
+        type="number"
+        placeholder="price" />
+      <input
+        type="submit"
+        value="Send" />
+    </form>
+
+    <hr />
+
+    <h2>Delete</h2>
+    <form
+      id="mformdel"
+      method="DELETE">
+      <input
+        name="id"
+        type="text"
+        placeholder="id" />
+      <input
+        type="submit"
+        value="Send" />
+    </form>
+
+    <hr />
+
+    <h2>PUT</h2>
+    <form id="mformPU">
+      <input
+        name="id"
+        type="text"
+        placeholder="id" />
+      <input
+        name="name"
+        type="text"
+        placeholder="produto" />
+      <input
+        name="price"
+        type="number"
+        placeholder="price" />
+      <input
+        type="submit"
+        value="Send" />
+    </form>
+
+    <h2>PUT item:</h2>
+    <form
+      action="GET"
+      id="getSingle">
+      <input
+        type="text"
+        name="itemid"
+        placeholder="enter id product" />
+      <input
+        type="submit"
+        value="Get Item" />
+    </form>
+
+    <fieldset>
+      <legend>Edit Item:</legend>
+      <form
+        action="PUT"
+        id="putSingle">
+        <input
+          type="text"
+          id="itemName" />
+        <input
+          type="text"
+          id="itemPrice" />
+        <input
+          type="submit"
+          value="Save" />
+      </form>
+    </fieldset>
+
+    <hr />
+    <h2>GET</h2>
+    <form id="mformGet">
+      <input
+        name="id"
+        type="text"
+        placeholder="id" />
+      <input
+        type="submit"
+        value="Send" />
+    </form>
+    <a
+      href=""
+      id="get"
+      target="_blank"></a>
+
+
+  <script>
+
+  </script>
+  <script src="./public/js/main.js"></script>
+  <script src="./public/js/copyid.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!-- exige os is isAuthenticated -->
+<% if (typeof isAuthenticated === 'undefined') { %>
+  <% let isAuthenticated = false %>
+<% } %>
+
+<nav>
+  <a href="/">Home</a>
+  <% if (!isAuthenticated) { %>
+    <a href="/login">Login</a>
+    <% } %> <% if (isAuthenticated) { %> 
+      
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+   <% } %>
+</nav>

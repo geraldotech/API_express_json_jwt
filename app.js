@@ -1,131 +1,269 @@
-const express = require("express");
-const { randomUUID } = require("crypto");
-const { response } = require("express");
-const fs = require("fs");
-const cors = require("cors");
-const path = require("path");
-var bodyParser = require("body-parser");
-const port = 3001;
+const express = require('express')
+const { randomUUID } = require('crypto')
+const { response } = require('express')
+const fs = require('fs')
+const cors = require('cors')
+const path = require('path')
+var bodyParser = require('body-parser')
+require('dotenv-safe').config()
+const jwt = require('jsonwebtoken')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const port = 3001
+const app = express()
+
+/*  === app use === */
+
+app.use(express.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
+app.use(cookieParser())
+
+app.use(
+  cors({
+    origin: 'https://api.gpdev.tech', // Allow requests only from this origin
+    // allowed Headers: ['Content-Type'], // Allow only specified headers
+  })
+)
+
+app.use(
+  session({
+    secret: process.env.SECRET, // Change this to your secret key
+    resave: false,
+    saveUninitialized: false,
+  })
+)
 
 
-const app = express();
-app.use(express.json());
+/* Array itens */
+let products = []
 
-app.use(cors({
-  origin: 'https://api.gpdev.tech', // Allow requests only from this origin
- // allowed Headers: ['Content-Type'], // Allow only specified headers
-}));
+// read json
+fs.readFile('products.json', 'utf-8', (err, data) => {
+  if (err) {
+    console.log(err)
+  } else {
+    products = JSON.parse(data)
+  }
+})
+
+/* sem cors mesmo na same origin não funciona  */
+
+/* === view engine setup === */
+
+//app.engine("html", require("ejs").renderFile);
+//app.set("view engine", "html");
+app.set('view engine', 'ejs') //engine irá buscar .ejs
+app.use('/public', express.static(path.join(__dirname, 'public')))
+app.set('views', path.join(__dirname, '/views'))
 
 // Set the public folder as the location for static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 
+/* === Routers === */
 
-let products = [];
-//render html
-fs.readFile("products.json", "utf-8", (err, data) => {
-  if (err) {
-    console.log(err);
+app.get('/', isAuth, (req, res, next) => {
+ // console.log(`route /`, req.isAuthenticated)
+  // Handle the case where the user is not logged in
+
+  /*   if (!req.notLoggedIn) {
+    console.log(`esta logado`)
+    res.render('index.ejs', { auth: true, info: 'Express API, cors, ejs' })
   } else {
-    products = JSON.parse(data);
-  }
-});
+  } */
+  res.render('index.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT' })
+})
 
-app.post("/products", (req, res) => {
-  const { name, price } = req.body;
+app.get('/dashboard', verifyJWT, (req, res) => {
+
+  const userId = req.query.userId; // Retrieve userId from query parameters
+  console.log(userId)
+
+  // leverage if return userid == loggin
+const isAuth = req.userId ? true : false
+
+  res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
+})
+
+app.get('/products/post/:id', isAuth, (req, res, next) => {
+  const { id } = req.params
+  const product = products.find((product) => product.id === id)
+
+  return res.render('single.ejs', { product, auth: req.isAuthenticated })
+})
+
+app.get('/products', (req, res) => {
+  return res.json(products)
+})
+
+app.get('/products/:id', (req, res) => {
+  const { id } = req.params
+  const product = products.find((product) => product.id === id)
+  return res.json(product)
+
+  // if you return this file as template, will broken single router json
+  //return res.render("single.ejs", {product});
+})
+
+app.get('/login', (req, res) => {
+  res.render('login.ejs', {})
+})
+
+app.get('/postnew', (req, res) => {
+  res.render('post.ejs')
+})
+
+app.get('/status', (req, res) => {
+  res.send('SERVER IS ON')
+})
+
+app.post('/products', verifyJWT, (req, res) => {
+  const { name, price } = req.body
 
   const product = {
     name,
     price,
     id: randomUUID(),
-  };
+  }
 
-  products.push(product);
+  products.push(product)
 
-  productFile();
+  productFile()
 
-  return res.json(product);
-});
-//cors para get only
-/* sem cors mesmo na same origin não funciona  */
-app.get("/products", cors(), (req, res) => {
-  return res.json(products);
-});
+  return res.json(product)
+})
 
-app.get("/products/:id", (req, res) => {
-  const { id } = req.params;
-  const product = products.find((product) => product.id === id);
-  return res.json(product);
+app.put('/products/:id', verifyJWT, (req, res) => {
+  const { id } = req.params
+  const { name, price } = req.body
 
-  // if you return this file as template, will broken single router json
-  //return res.render("single.ejs", {product});
-});
-
-// handle post + template html
-app.get("/products/post/:id", (req, res) => {
-  const { id } = req.params;
-  const product = products.find((product) => product.id === id);
-
-  return res.render("single.ejs", {product});
-});
-
-// === view engine setup === 
-
-//app.engine("html", require("ejs").renderFile);
-//app.set("view engine", "html");
-app.set("view engine", "ejs"); //engine irá buscar .ejs
-app.use("/public", express.static(path.join(__dirname, "public")));
-app.set("views", path.join(__dirname, "/views"));
-
-
-/* == set pages == */
-
-app.get("/", (req, res) => {
-  //res.send("home page!");
-  res.render("index.ejs", {info: 'Express API, cors, ejs'});
-});
-
-app.get("/methods", (req, res) => {
-  res.render("methods");
-});
-
-
-app.put("/products/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, price } = req.body;
-
-  const productIndex = products.findIndex((product) => product.id === id);
+  const productIndex = products.findIndex((product) => product.id === id)
 
   products[productIndex] = {
     ...products[productIndex],
     name,
     price,
-  };
+  }
 
-  productFile();
+  productFile()
 
-  return res.json({ message: "Produto alterado com sucecsso" });
-});
+  return res.json({ message: 'Produto alterado com sucecsso' })
+})
 
-app.delete("/products/:id", (req, res) => {
-  const { id } = req.params;
+app.delete('/products/:id', verifyJWT, (req, res) => {
+  const { id } = req.params
 
-  const productIndex = products.findIndex((product) => product.id === id);
+  const productIndex = products.findIndex((product) => product.id === id)
 
-  products.splice(productIndex, 1);
+  products.splice(productIndex, 1)
 
-  productFile();
+  productFile()
 
-  return res.json({ message: "produto removido com sucesso!" });
-});
+  return res.json({ message: 'produto removido com sucesso!' })
+})
 
-function productFile() {
-  fs.writeFile("products.json", JSON.stringify(products), (err) => {
+// JWT authentication
+app.post('/login', (req, res, next) => {
+  console.log(req.body)
+  //esse teste abaixo deve ser feito no seu banco de dados
+  if (req.body.user === 'geraldo' && req.body.pwd === '123') {
+    //auth ok
+    const id = 1 //esse id viria do banco de dados
+    const token = jwt.sign({ id }, process.env.SECRET, {
+      expiresIn: 30, // expires in 5min 300
+    })
+    // Store the token in the session
+    req.session.token = token
+
+    // return res.json({ auth: true, token: token })
+
+    // Redirect the user to the dashboard with additional data
+   // return res.redirect(302, `/dashboard?userId=${id}`)
+   return res.status(200).json({ auth: true, token });
+
+
+  }
+
+  //res.status(500).json({ message: 'Login inválido!' })
+  res.status(401).json({ message: 'Login inválido!' })
+})
+
+app.get('/logout', function (req, res) {
+  req.session.destroy(function (err) {
     if (err) {
-      console.log(erro);
-    } else {
-      console.log("produto inserido");
+      console.error('Error destroying session:', err)
+      return res.status(500).send('Internal Server Error')
     }
-  });
+    res.clearCookie('connect.sid')
+    return res.redirect('/')
+  })
+})
+
+/* === Middlewares === */
+
+// Check if the user is authenticated
+// some pages no needs protection, but can need knows user is loggin
+
+function isAuth(req, res, next) {
+  // Check if the token exists in the sessio
+  const token = req.session.token
+
+  if (!token) {
+    // If token doesn't exist, user is not logged in
+    req.isAuthenticated = false
+    return next() // Move to the next middleware/route handler
+  }
+
+  // Verify the token
+  jwt.verify(token, process.env.SECRET, function (err, decoded) {
+    if (err) {
+      req.isAuthenticated = false
+      return next()
+    }
+   // Token is valid, set user ID in the request object
+    req.userId = decoded?.id
+    req.isAuthenticated = true
+    next() // Move to the next middleware/route handler
+  })
 }
 
-app.listen(port, () => console.log("server rodando na porta: " + port));
+//função que verifica se o JWT é ok
+function verifyJWT(req, res, next) {
+  //const token = req.headers['authorization']
+  const token = req.session.token
+
+  //console.log(req.session.token)
+  if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' })
+
+  jwt.verify(token, process.env.SECRET, function (err, decoded) {
+    if (err) return res.status(500).send({ auth: false, message: 'Token inválido.' })
+
+    req.userId = decoded.id
+
+    next()
+  })
+}
+
+const helloMiddleware = () => {
+  return (req, res, next) => {
+    console.log('Hello from custom middleware!')
+    next() // Call next to move to the next middleware or route handler
+  }
+}
+
+/* === functions === */
+
+function productFile() {
+  fs.writeFile('products.json', JSON.stringify(products), (err) => {
+    if (err) {
+      console.log(erro)
+    } else {
+      console.log('produto inserido')
+    }
+  })
+}
+
+app.listen(port, () => console.log('server listening on port: ' + port))

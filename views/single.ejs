@@ -6,10 +6,14 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="/public/css/style.css">
+      <title> <%= product.name %></title>
   </head>
   <body>
-    <h1>Page</h1>
-    <p>Name: <%= product.name %> </p>
+    <h1>Single Page Template</h1>
+   <p>Está logado: <%=  auth %> </p>
+
+    <p>Product: <%= product.name %> </p>
     <p>Price: <%= product.price %> </p>
 
     <script></script>

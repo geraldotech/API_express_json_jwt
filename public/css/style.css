@@ -6,10 +6,12 @@ header{
   text-align: center;
 }
 
-input{
+input, button{
   border: 1px solid #fff;
   padding: .5rem;
 }
+
+/* Home Page */
 
 #singleid{
   cursor: pointer;
@@ -18,9 +20,12 @@ input{
   }
 }
 
-#allItems{
+#productsCards{
   display: flex;
   flex-wrap: wrap;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
 }
 

@@ -1,4 +1,7 @@
-# CRUD com Express() server +  FormData + Ajax
+# CRUD API
+### Express() server +  FormData + Ajax + jsonwebtoken + express session
+
+This project setup a RestAPI with all methods, no database is used, files are stored in a local .json file
 
 ## [Live Demo](https://api.gpdev.tech/)
 
