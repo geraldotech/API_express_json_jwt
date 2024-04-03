@@ -14,9 +14,8 @@ const app = express()
 
 /*  === app use === */
 
-
 // Parse URL-encoded bodies with extended syntax
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.json())
 app.use(cookieParser())
@@ -65,7 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 /* === Routers === */
 
 app.get('/', isAuth, (req, res, next) => {
- // console.log(`route /`, req.isAuthenticated)
+  // console.log(`route /`, req.isAuthenticated)
   // Handle the case where the user is not logged in
 
   /*   if (!req.notLoggedIn) {
@@ -77,12 +76,11 @@ app.get('/', isAuth, (req, res, next) => {
 })
 
 app.get('/dashboard', verifyJWT, (req, res) => {
-
-  const userId = req.query.userId; // Retrieve userId from query parameters
+  const userId = req.query.userId // Retrieve userId from query parameters
   console.log(userId)
 
   // leverage if return userid == loggin
-const isAuth = req.userId ? true : false
+  const isAuth = req.userId ? true : false
 
   res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
 })
@@ -91,10 +89,10 @@ app.get('/products/post/:id', isAuth, (req, res, next) => {
   const { id } = req.params
   const product = products.find((product) => product.id === id)
 
-  if(!product){
+  if (!product) {
     // maybe visite same single and return a 404 status
     // or create a 404 page
-   return  res.send(`404 product not found!`)
+    return res.render('404.ejs')
   }
   return res.render('single.ejs', { product, auth: req.isAuthenticated })
 })
@@ -108,7 +106,6 @@ app.get('/products/:id', (req, res) => {
   const product = products.find((product) => product.id === id)
 
   return res.json(product)
-
 
   // if you return this file as template, will broken single router json
   //return res.render("single.ejs", {product});
@@ -173,7 +170,7 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
 
 // JWT authentication
 app.post('/login', (req, res, next) => {
-  const { user, pwd } = req.body;
+  const { user, pwd } = req.body
   console.log(user)
 
   //esse teste abaixo deve ser feito no seu banco de dados
@@ -181,20 +178,19 @@ app.post('/login', (req, res, next) => {
     //auth ok
     const id = 1 //esse id viria do banco de dados
     const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 5, // expires in 5min 300
+      expiresIn: 300, // expires in 5min 300
     })
     // Store the token in the session
     req.session.token = token
 
     // return res.json({ auth: true, token: token })
 
-    // Redirect the user to the dashboard with additional  res.redirect(302, `/dashboard?userId=${id}`)data
-    return
+    // Redirect the user to the dashboard with additional  data
+    //// handle post form
+    return res.redirect(302, `/dashboard?userId=${id}`)
 
-   // handle post form
-   //return res.status(200).json({ auth: true, token });
-
-
+    
+   // return res.status(200).json({ auth: true, token });
   }
 
   //res.status(500).json({ message: 'Login inválido!' })
@@ -233,7 +229,7 @@ function isAuth(req, res, next) {
       req.isAuthenticated = false
       return next()
     }
-   // Token is valid, set user ID in the request object
+    // Token is valid, set user ID in the request object
     req.userId = decoded?.id
     req.isAuthenticated = true
     next() // Move to the next middleware/route handler
@@ -244,6 +240,7 @@ function isAuth(req, res, next) {
 function verifyJWT(req, res, next) {
   //const token = req.headers['authorization']
   const token = req.session.token
+  console.log(token)
 
   //console.log(req.session.token)
   if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' })

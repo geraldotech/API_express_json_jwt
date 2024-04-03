@@ -3,8 +3,9 @@
   <% let isAuthenticated = false %>
 <% } %>
 
-<nav class="topmenu">
-  <a href="/">Home</a>
+<nav class="nav">
+  <div class="topmenu">
+    <a href="/">Home</a>
   <% if (!isAuthenticated) { %>
     <a href="/login">Login</a>
     <% } %> <% if (isAuthenticated) { %> 
@@ -12,4 +13,5 @@
       <a href="/dashboard">Dashboard</a>
       <a href="/logout">Logout</a>
    <% } %>
+  </div>
 </nav>

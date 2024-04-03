@@ -28,3 +28,5 @@ This project setup a RestAPI with all methods, no database is used, files are st
 
 [https://expressjs.com/en/resources/middleware/cors.html](https://expressjs.com/en/resources/middleware/cors.html)
 [REF](https://www.youtube.com/watch?v=fm4_EuCsQwg)
+
+## JWT implementation thanks to [ref](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/)

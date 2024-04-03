@@ -20,10 +20,17 @@ input, button{
 
 /* Navbar */
 
-.topmenu{
+.nav{
   padding: 1rem;
   background: #333;
+  margin-bottom: 1rem;
  
+}
+
+.topmenu{
+  display: flex;
+  justify-content: space-around;
+  max-width: 400px;
 }
 
 /* Home Page */
@@ -69,4 +76,8 @@ input, button{
 .single.login{
   background-color: #333;
   padding: 1rem;
+}
+
+.page404{
+  text-align: center;
 }
