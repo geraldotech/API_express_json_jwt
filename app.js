@@ -1,4 +1,5 @@
-const express = require('express')
+/* const {express} = require('express')
+import express from 'express'
 const { randomUUID } = require('crypto')
 const fs = require('fs')
 const cors = require('cors')
@@ -9,7 +10,35 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const port = 3001
+const {app} = express()
+ */
+
+
+import express from 'express'
+import randomUUID from 'crypto'
+import fs from  'fs'
+import cors from 'cors'
+import path from 'path'
+import bodyParser from 'body-parser'
+import dotenv from 'dotenv-safe';
+dotenv.config();
+import jwt from 'jsonwebtoken'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+import {baseURL, hello} from './utils/fetchBaseUrl.js'
+
+/* 
+console.log(baseURL)
+console.log(hello()) */
+
+const port = 3001
 const app = express()
+/* import hello from './utils/test.js'
+
+console.log(hello()) */
 
 
 // Parse URL-encoded bodies with extended syntax
@@ -55,11 +84,23 @@ fs.readFile('products.json', 'utf-8', (err, data) => {
 //app.engine("html", require("ejs").renderFile);
 //app.set("view engine", "html");
 app.set('view engine', 'ejs') //engine irá buscar .ejs
-app.use('/public', express.static(path.join(__dirname, 'public')))
-app.set('views', path.join(__dirname, '/views'))
+/* app.use('/public', express.static(path.join(__dirname, 'public')))
+app.set('views', path.join(__dirname, '/views')) */
 
-// Set the public folder as the location for static files
-app.use(express.static(path.join(__dirname, 'public')))
+// Serve static files from the 'public' directory
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
+// Serve static files from the '/views' directory
+app.use(express.static(join(__dirname, 'views')));
+
+// Serve static files from the '/public' directory
+app.use(express.static(join(__dirname, 'public')));
+
+
+
 
 /* === Routers === */
 
@@ -124,11 +165,12 @@ app.get('/status', (req, res) => {
 })
 
 app.post('/products', verifyJWT, (req, res) => {
-  const { name, price } = req.body
+  const { name, price, slug, } = req.body
 
   const product = {
     name,
     price,
+    slug,
     id: randomUUID(),
   }
 

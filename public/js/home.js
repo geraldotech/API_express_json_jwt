@@ -43,7 +43,7 @@ ${dados.map((dados) => Object.values(dados.name).join('')).join('<tr><td>')}
 }
 
 /* fetch local host */
-const apiLocal = Production
+const apiLocal = baseURL
 
 async function tryFetchLocalHost(url = apiLocal) {
   try {
