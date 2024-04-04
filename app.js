@@ -3,7 +3,7 @@ const { randomUUID } = require('crypto')
 const fs = require('fs')
 const cors = require('cors')
 const path = require('path')
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 require('dotenv-safe').config()
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
@@ -77,8 +77,7 @@ app.get('/', isAuth, (req, res, next) => {
 
 app.get('/dashboard', verifyJWT, (req, res) => {
   const userId = req.query.userId // Retrieve userId from query parameters
-  console.log(userId)
-
+  
   // leverage if return userid == loggin
   const isAuth = req.userId ? true : false
 
@@ -121,7 +120,7 @@ app.get('/postnew', (req, res) => {
 })
 
 app.get('/status', (req, res) => {
-  res.send('SERVER IS ON')
+  res.json({ status: 201, message: 'SERVER IS ON' })
 })
 
 app.post('/products', verifyJWT, (req, res) => {
@@ -137,7 +136,10 @@ app.post('/products', verifyJWT, (req, res) => {
 
   productFile()
 
-  return res.json(product)
+  //return res.json(product)
+  // essa messageos optional?
+return res.status(201).json({message: "Product created successfully", product: product})
+ 
 })
 
 app.put('/products/:id', verifyJWT, (req, res) => {
@@ -154,7 +156,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
 
   productFile()
 
-  return res.json({ message: 'Produto alterado com sucecsso' })
+  return res.status(201).send({message: "Your product has been updated successfully!"})
 })
 
 app.delete('/products/:id', verifyJWT, (req, res) => {
@@ -166,7 +168,8 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
 
   productFile()
 
-  return res.json({ message: 'produto removido com sucesso!' })
+  //return res.json({ message: 'produto removido com sucesso!' })
+  return res.status(200).send({message: "Product deleted successfully"})
 })
 
 // JWT authentication
@@ -266,9 +269,9 @@ const helloMiddleware = () => {
 function productFile() {
   fs.writeFile('products.json', JSON.stringify(products), (err) => {
     if (err) {
-      console.log(erro)
+      console.log(err)
     } else {
-      console.log('produto inserido')
+      console.log('writeFile 201')    
     }
   })
 }

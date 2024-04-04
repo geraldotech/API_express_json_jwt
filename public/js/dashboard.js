@@ -20,24 +20,32 @@ form.onsubmit = function (event) {
     // Check if the request was a success
     if (this.readyState === XMLHttpRequest.DONE) {
       // Get and convert the responseText into JSON
-      console.log('Request was a success');
+      console.log('Request was a success')
       // reset form
       form.reset()
     }
 
-    // erros
+    // === get all server response ===
 
-    console.log(ajaxn.status)
     if (ajaxn.status === 0) {
       console.log(`usuario fazer login novamente`)
       console.log(ajaxn)
     }
-   
+
+    if (ajaxn.status === 201) {
+      // Parse the entire response as JSON
+      const responseData = JSON.parse(ajaxn.response)
+
+      const { message, product } = responseData
+      console.log(message)
+      console.log(product)
+    }
+
     if (ajaxn.status === 500) {
       const errorResponse = JSON.parse(ajaxn.responseText)
       console.error('Internal Server Error:', errorResponse.message)
       alert(errorResponse.message)
-      setTimeout(() => window.location = '/login', 1000)
+      setTimeout(() => (window.location = '/login'), 1000)
     }
   }
   ajaxn.onerror = function () {
@@ -63,13 +71,17 @@ formdel.onsubmit = function (event) {
     // Check if the request was a success
     if (this.readyState === XMLHttpRequest.DONE) {
       // Get and convert the responseText into JSON
-      console.log('Request was a success');
+      console.log('Request was a success')
 
       // reset form
       formdel.reset()
 
-      // update DOM products list if exists
-      //   fetchToShowinDOM(baseURL)
+      // == server response ==
+      if (ajaxn.status === 200) {
+        // Parse the entire response as JSON
+        const responseData = JSON.parse(ajaxn.response)
+        console.log(responseData)
+      }
     }
   }
 }
@@ -87,8 +99,8 @@ formPU.onsubmit = function (event) {
   const json = JSON.stringify(Object.fromEntries(data))
   ajaxn.send(json)
   if (ajaxn.readyState == XMLHttpRequest.DONE) {
+    console.log('Request was a success')
     formPU.reset()
-    console.log('Request was a success');
   }
 }
 
@@ -148,10 +160,18 @@ putSingle.onsubmit = (e) => {
     // Check if the request was a success
     if (this.readyState === XMLHttpRequest.DONE) {
       // Get and convert the responseText into JSON
-      console.log('Request was a success');
+      console.log('Request was a success')
 
       // reset form
       putSingle.reset()
+
+      // == server response ==
+      console.log(ajaxn.status)
+      if (ajaxn.status === 201) {
+        // Parse the entire response as JSON
+        const responseData = JSON.parse(ajaxn.response)
+        console.log(responseData.message)
+      }
 
       // update DOM products list
       // fetchToShowinDOM(baseURL)
