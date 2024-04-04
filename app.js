@@ -1,6 +1,5 @@
 const express = require('express')
 const { randomUUID } = require('crypto')
-const { response } = require('express')
 const fs = require('fs')
 const cors = require('cors')
 const path = require('path')
@@ -12,7 +11,6 @@ const session = require('express-session')
 const port = 3001
 const app = express()
 
-/*  === app use === */
 
 // Parse URL-encoded bodies with extended syntax
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -115,6 +113,7 @@ app.get('/login', (req, res) => {
   res.render('login.ejs', {})
 })
 
+// Beta
 app.get('/postnew', (req, res) => {
   res.render('post.ejs')
 })
@@ -171,7 +170,7 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
 // JWT authentication
 app.post('/login', (req, res, next) => {
   const { user, pwd } = req.body
-  console.log(user)
+  //console.log(user)
 
   //esse teste abaixo deve ser feito no seu banco de dados
   if (req.body.user === 'geraldo' && req.body.pwd === '123') {
@@ -240,7 +239,6 @@ function isAuth(req, res, next) {
 function verifyJWT(req, res, next) {
   //const token = req.headers['authorization']
   const token = req.session.token
-  console.log(token)
 
   //console.log(req.session.token)
   if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' })
