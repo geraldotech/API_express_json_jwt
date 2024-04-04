@@ -81,3 +81,8 @@ input, button{
 .page404{
   text-align: center;
 }
+
+/* Dashboard */
+main{
+  padding: 1rem;
+}

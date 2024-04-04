@@ -43,7 +43,7 @@ ${dados.map((dados) => Object.values(dados.name).join('')).join('<tr><td>')}
 }
 
 /* fetch local host */
-const apiLocal = 'http://localhost:3001/products'
+const apiLocal = Production
 
 async function tryFetchLocalHost(url = apiLocal) {
   try {

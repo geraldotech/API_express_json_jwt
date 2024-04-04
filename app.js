@@ -20,7 +20,9 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: 'https://api.gpdev.tech', // Allow requests only from this origin
+    origin: '*', // Allow requests only from this origin
+    methods: ['GET'], // Allow only specified methods
+    allowedHeaders: ['Content-Type'], // Allow only specified headers
     // allowed Headers: ['Content-Type'], // Allow only specified headers
   })
 )

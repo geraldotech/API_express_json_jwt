@@ -18,23 +18,25 @@
       <h2><%= header %></h2>
        <!--  <p>isAuthenticated?: <%= // auth %></p> -->
     </header>
+<main>
+  
+  <section id="productsCards"></section>
 
-    <section id="productsCards"></section>
+  <div class="container"></div>
+  <p>
+    check console.log after click
+    <button onclick="tryFetchLocalHost()">try fetch posts by localhost url</button>
+  </p>
 
-    <div class="container"></div>
-    <p>
-      check console.log after click
-      <button onclick="tryFetchLocalHost()">try fetch posts by localhost url</button>
-    </p>
+  BASEURL:
+  <a
+    id="base"
+    target="_blank"></a>
 
-    BASEURL:
-    <a
-      id="base"
-      target="_blank"></a>
+  <h2>fetch content from Node Server</h2>
+</main>
 
-    <h2>fetch content from Node Server</h2>
-
-    <script src="./js/home.js"></script>
+    <script src="../public/js/home.js"></script>
     <script src="../public/js/copyid.js"></script>
   </body>
 </html>
