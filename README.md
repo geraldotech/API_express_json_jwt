@@ -1,4 +1,6 @@
-# CRUD API
+# API express json jwt
+
+
 ### Express() server +  FormData + Ajax + jsonwebtoken + express session
 
 This project setup a RestAPI with all methods, no database is used, files are stored in a local .json file
