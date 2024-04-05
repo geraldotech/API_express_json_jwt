@@ -1,6 +1,6 @@
 /* == toggle production or devmode */
-const Production = true
-const baseURL = Production ? 'https://api.gpdev.tech/products/' : 'http://localhost:3001/products/'
+const Production = location.port != ''
+const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
 
 document.getElementById('base').href = baseURL
 document.getElementById('base').innerHTML = baseURL

@@ -15,7 +15,7 @@ const {app} = express()
 
 
 import express from 'express'
-import randomUUID from 'crypto'
+import {randomUUID} from 'crypto'
 import fs from  'fs'
 import cors from 'cors'
 import path from 'path'
@@ -27,6 +27,7 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import {getSlugFromString} from './utils/getSlugFromString.js'
 
 import {baseURL, hello} from './utils/fetchBaseUrl.js'
 
@@ -39,6 +40,7 @@ const app = express()
 /* import hello from './utils/test.js'
 
 console.log(hello()) */
+
 
 
 // Parse URL-encoded bodies with extended syntax
@@ -164,13 +166,15 @@ app.get('/status', (req, res) => {
   res.json({ status: 201, message: 'SERVER IS ON' })
 })
 
-app.post('/products', verifyJWT, (req, res) => {
-  const { name, price, slug, } = req.body
 
+
+app.post('/products', verifyJWT, (req, res) => {
+  const { name, price } = req.body
+  
   const product = {
     name,
     price,
-    slug,
+    slug: getSlugFromString(name),
     id: randomUUID(),
   }
 
