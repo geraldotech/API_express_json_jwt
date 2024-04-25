@@ -1,0 +1,53 @@
+
+    <!--  <p>Está logado? <%- isAuthenticated %> </p> -->
+    <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
+    
+
+    <main class="dashboard">
+      <a
+        id="base"
+        target="_blank"></a>
+
+      <h2>Edit item:</h2>
+      <p>
+        ID:
+        <span
+          id="productId"
+          data-id="<%= id %>"
+          ><%= id %></span
+        >
+      </p>
+      <form
+        name="mformPU"
+        id="mformPU">
+        <div>
+          createdAt:
+          <input
+            type="text"
+            name="createdAt"
+            disabled />
+        </div>
+        <div>
+          Name:
+          <input
+            name="name"
+            type="text"
+            placeholder="produto" />
+        </div>
+       <div>
+        Price:  <input
+        name="price"
+        type="number"
+        placeholder="price" />
+       </div>
+      <div>
+        <input
+        type="submit"
+        value="Update" />
+      </div>
+      </form>
+    </main>
+
+    <script src="/js/editPost.js"></script>
+  </body>
+</html>

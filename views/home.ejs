@@ -1,41 +1,13 @@
-<!DOCTYPE html>
-<html
-  lang="en"
-  style="color-scheme: dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <title>Express API</title>
-    <link
-      rel="stylesheet"
-      href="./css/style.css" />
-      <link rel="stylesheet" href="./src/home.css">
-  </head>
-  <body>
-    <header>
-      <%- include('navbar', { isAuthenticated: auth }); %>
-      <h2><%= header %></h2>
-       <!--  <p>isAuthenticated?: <%= // auth %></p> -->
-    </header>
-<main>
-  
-  <section id="productsCards"></section>
 
-  <div class="container"></div>
-  <p>
-    check console.log after click
-    <button onclick="tryFetchLocalHost()">try fetch posts by localhost url</button>
-  </p>
+    <%- include('./partials/Header', { isAuthenticated: auth }); %>
 
-  BASEURL:
-  <a
-    id="base"
-    target="_blank"></a>
-
-  <h2>fetch content from Node Server</h2>
-</main>
+    <main>
+      BASEURL:
+      <a
+        id="base"
+        target="_blank"></a>
+      <section id="productsCards"></section>
+    </main>
 
     <script src="./js/home.js"></script>
     <script src="./js/copyid.js"></script>

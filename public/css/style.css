@@ -86,3 +86,28 @@ input, button{
 main{
   padding: 1rem;
 }
+
+#listall div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem;
+  margin-block:0.3rem;
+  background: #333;
+}
+
+/* Edit Post */
+
+#mformPU {
+  display: flex;
+  max-width: 500px;
+ 
+  flex-direction: column;
+  & div{
+    padding: 0.5rem;
+
+  }
+  & input {
+    width: 100%;
+  }
+}

@@ -1,9 +1,9 @@
 # API express json jwt
-
-
 ### Express() server +  FormData + Ajax + jsonwebtoken + express session
 
 This project setup a RestAPI with all methods, no database is used, files are stored in a local .json file
+
+- https://http.cat/
 
 ## [Live Demo](https://api.gpdev.tech/)
 
@@ -22,9 +22,66 @@ This project setup a RestAPI with all methods, no database is used, files are st
 
 # set cors origin 
 ```
+
+### Pages how build:
+
+```js
+
+// Header.ejs // use main.js for all pages
+<html>
+<head>
+    
+    <script src="/js/main.js" defer></script>
+<head>
+<body>
+<header>
+</header>
+
+// Edit.ejs
+// import
+ <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
+
+
+// add custom js only on footer
+<script src="myCustom.js"></script>
+</body>
+</html>
+ ```
+
+
 # Routers:
 
-- /products
+```js
+
+- GET /products
+- GET /products/:id
+- GET /status
+- GET /products/post/:id
+
+// example multiple params and optional router
+- GET /movies/:name?/:id? 
+    - /movies/american/2
+
+- PUT /products/:id
+- DELETE /products/:id
+
+- POST /products
+// POST body
+{
+
+
+}
+
+
+```
+
+## Pages
+
+- /
+- /login
+- /dashboard
+
+
 
 ## About cors:
 
@@ -32,3 +89,7 @@ This project setup a RestAPI with all methods, no database is used, files are st
 [REF](https://www.youtube.com/watch?v=fm4_EuCsQwg)
 
 ## JWT implementation thanks to [ref](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/)
+
+### Next
+
+- SweetAlert

@@ -1,6 +1,9 @@
 /* == toggle production or devmode */
+
+// se nao tem porta
 const Production = location.port != ''
 const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
+console.log(`baseURL`, baseURL)
 
 async function fetchToShowinDOM(url) {
   try {
@@ -16,17 +19,7 @@ async function fetchToShowinDOM(url) {
 fetchToShowinDOM(baseURL)
 
 function domHandler(dados) {
-  document.querySelector('.container').insertAdjacentHTML(
-    'afterend',
-    `
-<table>
-
-<tr>
-${dados.map((dados) => Object.values(dados.name).join('')).join('<tr><td>')}
-</table>
-`
-  )
-
+ 
   document.getElementById('productsCards').innerHTML = dados
     .map(
       (ele) =>
@@ -39,17 +32,4 @@ ${dados.map((dados) => Object.values(dados.name).join('')).join('<tr><td>')}
 `
     )
     .join('')
-}
-
-/* fetch local host */
-const apiLocal = baseURL
-
-async function tryFetchLocalHost(url = apiLocal) {
-  try {
-    const req = await fetch(url)
-    const res = await req.json()
-    console.warn(res)
-  } catch (err) {
-    console.log(err)
-  }
 }

@@ -1,23 +1,21 @@
 import express from 'express'
-import {randomUUID} from 'crypto'
-import fs from  'fs'
+import { randomUUID } from 'crypto'
+import fs from 'fs'
 import cors from 'cors'
 import path from 'path'
 import bodyParser from 'body-parser'
-import dotenv from 'dotenv-safe';
-dotenv.config();
+import dotenv from 'dotenv-safe'
+dotenv.config()
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-import {getSlugFromString} from './utils/getSlugFromString.js'
-import {createdAt} from './utils/createdAt.js'
-
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+import { getSlugFromString } from './utils/getSlugFromString.js'
+import { createdAt } from './utils/createdAt.js'
 
 const port = 3001
 const app = express()
-
 
 // Parse URL-encoded bodies with extended syntax
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -41,7 +39,6 @@ app.use(
     saveUninitialized: false,
   })
 )
-
 
 /* Array itens */
 let products = []
@@ -67,16 +64,14 @@ app.set('views', path.join(__dirname, '/views')) */
 
 // Serve static files from the 'public' directory
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 // Serve static files from the '/views' directory
-app.use(express.static(join(__dirname, 'views')));
+app.use(express.static(join(__dirname, 'views')))
 
 // Serve static files from the '/public' directory
-app.use(express.static(join(__dirname, 'public')));
-
+app.use(express.static(join(__dirname, 'public')))
 
 /* === Routers === */
 
@@ -89,20 +84,48 @@ app.get('/', isAuth, (req, res, next) => {
     res.render('index.ejs', { auth: true, info: 'Express API, cors, ejs' })
   } else {
   } */
-  res.render('home.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT' })
+  res.render('home.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT', isAuthenticated: isAuth })
 })
 
-app.get('/dashboard', verifyJWT, (req, res) => {
+// router dashboard and create post
+
+app.get('/dashboard/:action?', verifyJWT, (req, res) => {
   const userId = req.query.userId // Retrieve userId from query parameters
-  
   // leverage if return userid == loggin
   const isAuth = req.userId ? true : false
 
-  res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
+  const { action } = req.params
+  if (action === 'createnew') {
+    console.log(`logado`)
+    // Handle 'createnew' action
+    return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
+  }
+
+  if (action === 'edit') {
+    return res.send('edit template')
+  }
+  return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
+})
+
+// router edit and delete
+app.get('/dashboard/edit/:id', verifyJWT, (req, res) => {
+  const userId = req.query.userId // Retrieve userId from query parameters
+  // leverage if return userid == loggin
+  const isAuth = req.userId ? true : false
+
+  const { id } = req.params
+  res.render('editPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id })
+  //return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth } );
+})
+
+app.get('/dashboard/delete/:id', (req, res) => {
+  const {id} = req.params
+
+  res.render('deletePost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id })
 })
 
 app.get('/products/post/:id', isAuth, (req, res, next) => {
-  const { id } = req.params
+  const { id, slug } = req.params
   const product = products.find((product) => product.id === id)
 
   if (!product) {
@@ -122,7 +145,6 @@ app.get('/products/:id', (req, res) => {
   const product = products.find((product) => product.id === id)
 
   return res.json(product)
-
   // if you return this file as template, will broken single router json
   //return res.render("single.ejs", {product});
 })
@@ -131,19 +153,9 @@ app.get('/login', (req, res) => {
   res.render('login.ejs', {})
 })
 
-// Beta
-app.get('/postnew', (req, res) => {
-  res.render('post.ejs')
-})
-
-app.get('/status', (req, res) => {
-  res.json({ status: 201, message: 'SERVER IS ON' })
-})
-
-
 app.post('/products', verifyJWT, (req, res) => {
   const { name, price } = req.body
-  
+
   const product = {
     name,
     price,
@@ -158,8 +170,7 @@ app.post('/products', verifyJWT, (req, res) => {
 
   //return res.json(product)
   // essa messageos optional?
-  return res.status(201).json({message: "Product created successfully", product: product})
- 
+  return res.status(201).json({ message: 'Product created successfully', product: product })
 })
 
 app.put('/products/:id', verifyJWT, (req, res) => {
@@ -176,7 +187,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
 
   productFile()
 
-  return res.status(201).send({message: "Your product has been updated successfully!"})
+  return res.status(201).send({ message: 'Your product has been updated successfully!' })
 })
 
 app.delete('/products/:id', verifyJWT, (req, res) => {
@@ -189,7 +200,23 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
   productFile()
 
   //return res.json({ message: 'produto removido com sucesso!' })
-  return res.status(200).send({message: "Product deleted successfully"})
+  return res.status(200).send({ message: 'Product deleted successfully' })
+})
+
+// example multiple params and optional router
+app.get('/movies/:name?/:id?', (req, res) => {
+  const product = req.params
+
+  console.log(product)
+  // Access the category and id parameters
+  // Perform operations based on the parameters
+  // return res.render('movie.ejs', {product})
+
+  return res.render('movie.ejs', { product })
+})
+
+app.get('/status', (req, res) => {
+  res.json({ status: 201, message: 'SERVER IS ON' })
 })
 
 // JWT authentication
@@ -202,7 +229,7 @@ app.post('/login', (req, res, next) => {
     //auth ok
     const id = 1 //esse id viria do banco de dados
     const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 300, // expires in 5min 300
+      expiresIn: 600, // expires in 5min 300 // 600 10min
     })
     // Store the token in the session
     req.session.token = token
@@ -211,10 +238,12 @@ app.post('/login', (req, res, next) => {
 
     // Redirect the user to the dashboard with additional  data
     //// handle post form
-    return res.redirect(302, `/dashboard?userId=${id}`)
 
-    
-   // return res.status(200).json({ auth: true, token });
+    // redirect with params
+    //  return res.redirect(302, `/dashboard?userId=${id}`)
+    return res.redirect(302, `/dashboard`)
+
+    // return res.status(200).json({ auth: true, token });
   }
 
   //res.status(500).json({ message: 'Login inválido!' })
@@ -266,10 +295,12 @@ function verifyJWT(req, res, next) {
   const token = req.session.token
 
   //console.log(req.session.token)
-  if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' })
+/*   if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' }) */
+  if (!token) return res.status(401).send('<p>user não logado <a href="/login">login</a> </p>')
 
   jwt.verify(token, process.env.SECRET, function (err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
+   // if (err) return res.status(500).send({ auth: false, message: '<p>user não logado <a href="/login">login</a> </p>' })
 
     req.userId = decoded.id
 
@@ -291,7 +322,7 @@ function productFile() {
     if (err) {
       console.log(err)
     } else {
-      console.log('writeFile 201')    
+      console.log('writeFile 201')
     }
   })
 }

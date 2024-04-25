@@ -1,0 +1,26 @@
+
+
+    <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
+
+    <main class="dashboard">
+      <h2>Create New Product</h2>
+      <form
+        id="mform"
+        method="POST">
+        <input
+          name="name"
+          type="text"
+          placeholder="produto" />
+        <input
+          name="price"
+          type="number"
+          placeholder="price" />
+        <input
+          type="submit"
+          value="Create" />
+      </form>
+    </main>
+
+    <script src="../js/dashboard.js"></script>
+  </body>
+</html>
