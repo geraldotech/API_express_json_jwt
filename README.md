@@ -23,6 +23,9 @@ This project setup a RestAPI with all methods, no database is used, files are st
 # set cors origin 
 ```
 
+### baseURL 
+are smart to detect local or domain deploy
+
 ### Pages how build:
 
 ```js

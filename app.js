@@ -14,6 +14,10 @@ import { fileURLToPath } from 'url'
 import { getSlugFromString } from './utils/getSlugFromString.js'
 import { createdAt } from './utils/createdAt.js'
 
+
+
+console.log(process.env.BASEURL);
+
 const port = 3001
 const app = express()
 
@@ -84,7 +88,7 @@ app.get('/', isAuth, (req, res, next) => {
     res.render('index.ejs', { auth: true, info: 'Express API, cors, ejs' })
   } else {
   } */
-  res.render('home.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT', isAuthenticated: isAuth })
+  res.render('home.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT', isAuthenticated: isAuth, baseURL: process.env.BASEURL })
 })
 
 // router dashboard and create post

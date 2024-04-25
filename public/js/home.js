@@ -3,13 +3,12 @@
 // se nao tem porta
 const Production = location.port != ''
 const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
-console.log(`baseURL`, baseURL)
+//console.log(`baseURL`, baseURL)
 
 async function fetchToShowinDOM(url) {
   try {
     const req = await fetch(url)
     const res = await req.json()
-    console.warn('baseURL: ', baseURL)
     //  console.table(res)
     domHandler(res)
   } catch (err) {

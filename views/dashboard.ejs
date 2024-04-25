@@ -21,7 +21,7 @@
     <!--  <p>Está logado? <%- isAuthenticated %> </p> -->
     <header>
       <!-- pass auth stat to nav, dashboard only show if user is loggin, so nav no needs this information -->
-      <%- include('navbar', { isAuthenticated: isAuthenticated }); %>
+      <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
     </header>
     
     <main class="dashboard">
