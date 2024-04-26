@@ -1,5 +1,6 @@
 const Production = location.port != ''
 const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
+const productsadmin = Production ? 'http://localhost:3001/productsadmin/' : 'https://api.gpdev.tech/productsadmin/'
 
 const productId = document.getElementById('productId').dataset.id
 const labelText = document.querySelector('[data=publishedstate]')
@@ -12,7 +13,7 @@ let createdAt = document.mformPU.createdAt
 let published = document.mformPU.published
 let publishedStatus
 
-fetch(`${baseURL}${productId}`)
+fetch(`${productsadmin}${productId}`)
   .then((res) => res.json())
   .then((data) => {
     itemId.value = data.id
@@ -39,7 +40,6 @@ const mformPU = document.querySelector('#mformPU')
 
 mformPU.onsubmit = function () {
   event.preventDefault()
-  console.log(`enviado como`, publishedStatus)
 
   // constructor obj data
   let data = {
@@ -47,10 +47,9 @@ mformPU.onsubmit = function () {
     price: itemPrice.value,
     published: publishedStatus,
   }
-  console.log(`data`, data)
 
   const ajaxn = new XMLHttpRequest()
-  ajaxn.open('PUT', `${baseURL}${productId}?action=admin`)
+  ajaxn.open('PUT', `${baseURL}${productId}`)
 
   ajaxn.setRequestHeader('content-Type', 'application/json')
   const json = JSON.stringify(data)

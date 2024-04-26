@@ -1,1 +1,1 @@
-console.log(`main ok`)
+console.log(`CSR main.js`)

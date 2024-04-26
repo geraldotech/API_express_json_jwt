@@ -14,9 +14,7 @@ import { fileURLToPath } from 'url'
 import { getSlugFromString } from './utils/getSlugFromString.js'
 import { createdAt } from './utils/createdAt.js'
 
-
-
-console.log(process.env.BASEURL);
+console.log(process.env.BASEURL)
 
 const port = 3001
 const app = express()
@@ -100,7 +98,6 @@ app.get('/dashboard/:action?', verifyJWT, (req, res) => {
 
   const { action } = req.params
   if (action === 'createnew') {
-    console.log(`logado`)
     // Handle 'createnew' action
     return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
   }
@@ -116,23 +113,22 @@ app.get('/dashboard/edit/:id', verifyJWT, (req, res) => {
   const userId = req.query.userId // Retrieve userId from query parameters
   // leverage if return userid == loggin
   const isAuth = req.userId ? true : false
- 
 
   const { id } = req.params
   res.render('editPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id })
-  
+
   //return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth } );
 })
 
 app.get('/dashboard/delete/:id', (req, res) => {
-  const {id} = req.params
+  const { id } = req.params
 
   res.render('deletePost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id })
 })
 
 app.get('/products/post/:id', isAuth, (req, res, next) => {
   const { id, slug } = req.params
-  const product = products.find((product) => product.id === id)
+  const product = products.find((product) => product.id === id && product.published)
 
   if (!product) {
     // maybe visite same single and return a 404 status
@@ -143,27 +139,24 @@ app.get('/products/post/:id', isAuth, (req, res, next) => {
 })
 
 app.get('/products', (req, res) => {
-  
   //filter
   const published = products.filter((post) => post.published === true)
 
   // chooice what send to client
-  const sendPosts = published?.map(({id, name, price}) => {
-  return {
-    id,
-    name,
-    price
-  }
-  })  
+  const sendPosts = published?.map(({ id, name, price }) => {
+    return {
+      id,
+      name,
+      price,
+    }
+  })
   return res.json(sendPosts)
 })
 
 // router autenticada envia todos os produtos para o dashboard
 app.get('/allproducts', verifyJWT, (req, res) => {
-
   return res.json(products)
 })
-
 
 /* app.get('/products/:id', (req, res) => {
   const { id } = req.params
@@ -175,18 +168,25 @@ app.get('/allproducts', verifyJWT, (req, res) => {
   } */
 app.get('/products/:id', (req, res) => {
   const { id } = req.params
-  const {action} = req.query
 
-  if(action === 'admin'){
-    
-    ///console.log(`is a admin request`)
-    const product = products.find((product) => product.id === id)
-    return res.json(product)
+  ///console.log(`is a admin request`)
+  const product = products.find((product) => product.id === id && product.published)
+  if(!product){
+    res.send('not found')
   }
+  return res.json(product)
 
-  const productPublished = products.find((product) => product.id === id && product.published)
-  return res.json(productPublished)
+  // if you return this file as template, will broken single router json
+  //return res.render("single.ejs", {product});
+})
 
+// router autenticada envia todo os produtos para o editAdmin
+app.get('/productsadmin/:id', verifyJWT, (req, res) => {
+  const { id } = req.params
+
+  ///console.log(`is a admin request`)
+  const product = products.find((product) => product.id === id)
+  return res.json(product)
 
   // if you return this file as template, will broken single router json
   //return res.render("single.ejs", {product});
@@ -196,9 +196,8 @@ app.get('/login', (req, res) => {
   res.render('login.ejs', {})
 })
 
-app.post('/products',  (req, res) => {
+app.post('/products', (req, res) => {
   const { name, price, published } = req.body
-
 
   const product = {
     id: randomUUID(),
@@ -206,7 +205,7 @@ app.post('/products',  (req, res) => {
     price,
     slug: getSlugFromString(name),
     createdAt: createdAt(),
-    published    
+    published,
   }
 
   products.push(product)
@@ -228,7 +227,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
     ...products[productIndex],
     name,
     price,
-    published
+    published,
   }
 
   productFile()
@@ -341,13 +340,12 @@ function verifyJWT(req, res, next) {
   const token = req.session.token
 
   //console.log(req.session.token)
-/*   if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' }) */
-  if (!token) return res.status(401).send('<p>user não logado <a href="/login">login</a> </p>')
+  /*   if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' }) */
+  if (!token) return res.status(401).send('<p>session expired <a href="/login">Sign in</a> </p>')
 
   jwt.verify(token, process.env.SECRET, function (err, decoded) {
-  // if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
-   if (err) return res.status(500).send('<p>sessão expirada ou Token inválido <a href="/login">login</a></p>')
-
+    // if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
+    if (err) return res.status(500).send('<p>sessão expirada ou Token inválido <a href="/login">login</a></p>')
 
     req.userId = decoded.id
 

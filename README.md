@@ -34,7 +34,7 @@ are smart to detect local or domain deploy
 <html>
 <head>
     
-    <script src="/js/main.js" defer></script>
+<script src="/js/main.js" defer></script>
 <head>
 <body>
 <header>
@@ -71,11 +71,29 @@ are smart to detect local or domain deploy
 - DELETE /products/:id
 
 - POST /products
+
+
 // POST body
 {
+"name":"bisXtra",
+"price":"5",
+"published" true
+
+"slug":"bisxtra", // auto
+"createdAt":"20/04/24 18:54:17", // auto 
+"id":"ecaa22f1-4da7-45ce-b4b0-a5132ecc600b" // auto
+"}
+
+// coming soon obj
+"body" // description...
+"imageUrl": // url
+"stock": 0, // number
+"category:": select a category: list from a list.json
 
 
-}
+// to implement new obj
+changes in post, put routes
+render body in homepage, single, edit forms
 
 
 ```
@@ -95,6 +113,3 @@ are smart to detect local or domain deploy
 
 ## JWT implementation thanks to [ref](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/)
 
-### Next
-
-- SweetAlert

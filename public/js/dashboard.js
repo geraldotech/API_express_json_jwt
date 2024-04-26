@@ -65,39 +65,6 @@ if (form) {
   }
 }
 
-// DELETE
-const formdel = document.querySelector('#mformdel')
-
-if (formdel) {
-  formdel.onsubmit = function (event) {
-    event.preventDefault()
-    const ajaxn = new XMLHttpRequest()
-    const data = new FormData(formdel)
-    console.log(data.get('id'))
-
-    ajaxn.open('DELETE', baseURL + data.get('id'))
-    ajaxn.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-    ajaxn.send()
-    ajaxn.onload = function (e) {
-      // Check if the request was a success
-      if (this.readyState === XMLHttpRequest.DONE) {
-        // Get and convert the responseText into JSON
-        console.log('Request was a success')
-
-        // reset form
-        formdel.reset()
-
-        // == server response ==
-        if (ajaxn.status === 200) {
-          // Parse the entire response as JSON
-          const responseData = JSON.parse(ajaxn.response)
-          console.log(responseData)
-        }
-      }
-    }
-  }
-}
-
 async function fetchToShowinDOM(url) {
   try {
     const req = await fetch(url)
@@ -117,7 +84,12 @@ function domHandler(dados) {
   if (listAll) {
     listAll.innerHTML += dados
       .map((val) => {
-        return `<div><span>${val.name}</span>  <span><a href="/dashboard/edit/${val.id}">EDIT</a>   <button data-item="${val.id}">DELETE</button></span></div>`
+        return `<div>
+        <span>${val.name}</span> 
+        <span>published:${val.published}</span>  
+        <span class="buttons"><a href="/dashboard/edit/${val.id}">EDIT</a>
+        <button data-item="${val.id}">DELETE</button></span>  
+         </div>`
       })
       .join(' ')
   }
