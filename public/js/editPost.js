@@ -20,7 +20,9 @@ fetch(`${productsadmin}${productId}`)
     createdAt.value = data.createdAt
     itemName.value = data.name
     itemPrice.value = data.price
-    published.checked = data.published
+
+    published.checked = data.published // send check to button
+    publishedStatus = data.published // send check to status
   })
 
   .catch((error) => {
