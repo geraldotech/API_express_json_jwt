@@ -103,6 +103,7 @@ render body in homepage, single, edit forms
 - /
 - /login
 - /dashboard
+    - /dashboard/edit
 
 
 

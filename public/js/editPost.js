@@ -53,7 +53,16 @@ mformPU.onsubmit = function () {
   const ajaxn = new XMLHttpRequest()
   ajaxn.open('PUT', `${baseURL}${productId}`)
 
-  ajaxn.setRequestHeader('content-Type', 'application/json')
+
+/* 
+  If you're sending JSON data with your AJAX request and you want to specify both the Content-Type header as application/json and the X-Requested-With header as XMLHttpRequest, you can set both headers before sending the request. Here's how you can do it: */
+
+// Set Content-Type header to application/json
+ajaxn.setRequestHeader('Content-Type', 'application/json');
+
+// Set X-Requested-With header to XMLHttpRequest
+ajaxn.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
   const json = JSON.stringify(data)
 
   ajaxn.send(json)
@@ -68,15 +77,36 @@ mformPU.onsubmit = function () {
       //putSingle.reset()
 
       // == server response ==
-      console.log(ajaxn.status)
+      
+      // Parse the entire response as JSON
+      const responseData = JSON.parse(ajaxn.response)
+
+      if(!responseData.auth){
+        Swal.fire({
+          title: 'session expired!',
+          text: 'new login required',
+          icon: "error",
+          confirmButtonText: 'OK',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.href = '/login'
+          }
+        })
+      
+      }
+
       if (ajaxn.status === 201) {
-        // Parse the entire response as JSON
-        const responseData = JSON.parse(ajaxn.response)
+
+
         Swal.fire({
           title: 'Updated!',
           text: responseData.message, // send server response
           icon: 'success',
         })
+      }
+      
+      if(ajaxn.status === 500){
+        console.log(`deslogado from server`)
       }
 
       // update DOM products list

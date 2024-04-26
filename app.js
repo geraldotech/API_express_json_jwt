@@ -171,7 +171,7 @@ app.get('/products/:id', (req, res) => {
 
   ///console.log(`is a admin request`)
   const product = products.find((product) => product.id === id && product.published)
-  if(!product){
+  if (!product) {
     res.send('not found')
   }
   return res.json(product)
@@ -193,11 +193,17 @@ app.get('/productsadmin/:id', verifyJWT, (req, res) => {
 })
 
 app.get('/login', (req, res) => {
+
   res.render('login.ejs', {})
 })
 
-app.post('/products', (req, res) => {
+app.post('/products', verifyJWT, (req, res) => {
   const { name, price, published } = req.body
+
+  // nem precisa, mais caso input nao tenha o attribute required send a message
+  if(!name && !price){
+      return res.status(406).json({ message: 'Fill out the fields' })
+  }
 
   const product = {
     id: randomUUID(),
@@ -345,7 +351,15 @@ function verifyJWT(req, res, next) {
 
   jwt.verify(token, process.env.SECRET, function (err, decoded) {
     // if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
-    if (err) return res.status(500).send('<p>sessão expirada ou Token inválido <a href="/login">login</a></p>')
+
+    // handler custom return if ajax or browser
+    if (err) {
+      if (req.xhr) {
+        return res.status(500).json({ auth: false, message: 'sessão expirada ou Token inválido' })
+      } else {
+        return res.status(500).send('<p>sessão expirada ou Token inválido <a href="/login">login</a></p>')
+      }
+    }
 
     req.userId = decoded.id
 

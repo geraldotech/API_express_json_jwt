@@ -65,7 +65,10 @@ formdel.onsubmit = function (event) {
   console.log(data.get('id'))
 
   ajaxn.open('DELETE', baseURL + data.get('id'))
+  
   ajaxn.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+
+
   ajaxn.send()
   ajaxn.onload = function (e) {
     // Check if the request was a success
