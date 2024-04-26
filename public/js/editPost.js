@@ -2,13 +2,15 @@ const Production = location.port != ''
 const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
 
 const productId = document.getElementById('productId').dataset.id
-
+const labelText = document.querySelector('[data=publishedstate]')
 
 // select using FormName
 let itemId = document.mformPU.id
 let itemName = document.mformPU.name
 let itemPrice = document.mformPU.price
 let createdAt = document.mformPU.createdAt
+let published = document.mformPU.published
+let publishedStatus
 
 fetch(`${baseURL}${productId}`)
   .then((res) => res.json())
@@ -17,24 +19,38 @@ fetch(`${baseURL}${productId}`)
     createdAt.value = data.createdAt
     itemName.value = data.name
     itemPrice.value = data.price
+    published.checked = data.published
   })
+
   .catch((error) => {
     console.error('Error fetching product information:', error)
   })
+
+function setLabelTextFromState() {
+  published.addEventListener('click', function () {
+    publishedStatus = published.checked
+    labelText.textContent = publishedStatus ? 'published' : 'unpublished'
+  })
+}
+
+setLabelTextFromState()
 
 const mformPU = document.querySelector('#mformPU')
 
 mformPU.onsubmit = function () {
   event.preventDefault()
+  console.log(`enviado como`, publishedStatus)
 
   // constructor obj data
   let data = {
     name: itemName.value,
     price: itemPrice.value,
+    published: publishedStatus,
   }
+  console.log(`data`, data)
 
   const ajaxn = new XMLHttpRequest()
-  ajaxn.open('PUT', `${baseURL}${productId}`)
+  ajaxn.open('PUT', `${baseURL}${productId}?action=admin`)
 
   ajaxn.setRequestHeader('content-Type', 'application/json')
   const json = JSON.stringify(data)
@@ -56,10 +72,10 @@ mformPU.onsubmit = function () {
         // Parse the entire response as JSON
         const responseData = JSON.parse(ajaxn.response)
         Swal.fire({
-          title: "Updated!",
+          title: 'Updated!',
           text: responseData.message, // send server response
-          icon: "success"
-        });
+          icon: 'success',
+        })
       }
 
       // update DOM products list

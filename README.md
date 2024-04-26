@@ -56,7 +56,9 @@ are smart to detect local or domain deploy
 
 ```js
 
-- GET /products
+- GET /products // only published itens
+- GET /allproducts // auth router for dashboard
+
 - GET /products/:id
 - GET /status
 - GET /products/post/:id

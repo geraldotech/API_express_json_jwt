@@ -7,17 +7,29 @@
       <form
         id="mform"
         method="POST">
+    <div>
+      Name:
+      <input
+      name="name"
+      type="text"
+      placeholder="produto" />
+    </div>
+      <div>
+        Price:
         <input
-          name="name"
-          type="text"
-          placeholder="produto" />
+        name="price"
+        type="number"
+        placeholder="price" />
+      </div>
+       <div>
+         <input name="checked" type="checkbox" id="published">
+        <label for="published">published</label>
+       </div>
+       <div>
         <input
-          name="price"
-          type="number"
-          placeholder="price" />
-        <input
-          type="submit"
-          value="Create" />
+        type="submit"
+        value="Create" />
+       </div>
       </form>
     </main>
 

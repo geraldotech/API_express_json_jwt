@@ -111,14 +111,16 @@ app.get('/dashboard/:action?', verifyJWT, (req, res) => {
   return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
 })
 
-// router edit and delete
+// router edit and delete verifyJWT
 app.get('/dashboard/edit/:id', verifyJWT, (req, res) => {
   const userId = req.query.userId // Retrieve userId from query parameters
   // leverage if return userid == loggin
   const isAuth = req.userId ? true : false
+ 
 
   const { id } = req.params
   res.render('editPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id })
+  
   //return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth } );
 })
 
@@ -141,14 +143,51 @@ app.get('/products/post/:id', isAuth, (req, res, next) => {
 })
 
 app.get('/products', (req, res) => {
+  
+  //filter
+  const published = products.filter((post) => post.published === true)
+
+  // chooice what send to client
+  const sendPosts = published?.map(({id, name, price}) => {
+  return {
+    id,
+    name,
+    price
+  }
+  })  
+  return res.json(sendPosts)
+})
+
+// router autenticada envia todos os produtos para o dashboard
+app.get('/allproducts', verifyJWT, (req, res) => {
+
   return res.json(products)
 })
 
-app.get('/products/:id', (req, res) => {
+
+/* app.get('/products/:id', (req, res) => {
   const { id } = req.params
   const product = products.find((product) => product.id === id)
+  const {action} = req.query
+  console.log(action)
+  if(action === 'edit'){
+    console.log(`is a admin request`)
+  } */
+app.get('/products/:id', (req, res) => {
+  const { id } = req.params
+  const {action} = req.query
 
-  return res.json(product)
+  if(action === 'admin'){
+    
+    ///console.log(`is a admin request`)
+    const product = products.find((product) => product.id === id)
+    return res.json(product)
+  }
+
+  const productPublished = products.find((product) => product.id === id && product.published)
+  return res.json(productPublished)
+
+
   // if you return this file as template, will broken single router json
   //return res.render("single.ejs", {product});
 })
@@ -157,15 +196,17 @@ app.get('/login', (req, res) => {
   res.render('login.ejs', {})
 })
 
-app.post('/products', verifyJWT, (req, res) => {
-  const { name, price } = req.body
+app.post('/products',  (req, res) => {
+  const { name, price, published } = req.body
+
 
   const product = {
+    id: randomUUID(),
     name,
     price,
     slug: getSlugFromString(name),
     createdAt: createdAt(),
-    id: randomUUID(),
+    published    
   }
 
   products.push(product)
@@ -179,7 +220,7 @@ app.post('/products', verifyJWT, (req, res) => {
 
 app.put('/products/:id', verifyJWT, (req, res) => {
   const { id } = req.params
-  const { name, price } = req.body
+  const { name, price, published } = req.body
 
   const productIndex = products.findIndex((product) => product.id === id)
 
@@ -187,6 +228,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
     ...products[productIndex],
     name,
     price,
+    published
   }
 
   productFile()
@@ -233,7 +275,7 @@ app.post('/login', (req, res, next) => {
     //auth ok
     const id = 1 //esse id viria do banco de dados
     const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 600, // expires in 5min 300 // 600 10min
+      expiresIn: 300, // expires in 5min 300 // 600 10min
     })
     // Store the token in the session
     req.session.token = token
@@ -303,8 +345,9 @@ function verifyJWT(req, res, next) {
   if (!token) return res.status(401).send('<p>user não logado <a href="/login">login</a> </p>')
 
   jwt.verify(token, process.env.SECRET, function (err, decoded) {
-    if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
-   // if (err) return res.status(500).send({ auth: false, message: '<p>user não logado <a href="/login">login</a> </p>' })
+  // if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
+   if (err) return res.status(500).send('<p>sessão expirada ou Token inválido <a href="/login">login</a></p>')
+
 
     req.userId = decoded.id
 

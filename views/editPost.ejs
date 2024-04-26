@@ -2,6 +2,7 @@
     <!--  <p>Está logado? <%- isAuthenticated %> </p> -->
     <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
     
+     <%- // isAuthenticated %>
 
     <main class="dashboard">
       <a
@@ -39,6 +40,10 @@
         name="price"
         type="number"
         placeholder="price" />
+       </div>
+       <div>
+         <input type="checkbox" id="published" name="published">
+         <label for="published" data="publishedstate">published</label>
        </div>
       <div>
         <input

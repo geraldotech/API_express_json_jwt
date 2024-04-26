@@ -1,5 +1,7 @@
 
-
+*{
+  color-scheme: dark;
+}
 header, nav, html, body{
   margin: 0;
 }
@@ -24,7 +26,9 @@ input, button{
   padding: 1rem;
   background: #333;
   margin-bottom: 1rem;
- 
+ & a{
+  color: #fff;
+ }
 }
 
 .topmenu{
@@ -53,6 +57,7 @@ input, button{
 
 .card{
   background-color: #333;
+  color: #fff;
   padding: 0.5rem;
   max-width: 350px;
   width: 100%;
@@ -66,6 +71,15 @@ input, button{
 
 .card {
   margin: 5px;
+}
+
+.card a {
+  color: #2a95ff;
+  text-decoration: none;
+  &:hover{
+    color: blue;
+    transition: 500ms;
+  }
 }
 
 /* Login */
@@ -83,6 +97,12 @@ input, button{
 }
 
 /* Dashboard */
+
+.dashboard{
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 main{
   padding: 1rem;
 }
@@ -96,9 +116,11 @@ main{
   background: #333;
 }
 
+
+
 /* Edit Post */
 
-#mformPU {
+#mformPU, #mform {
   display: flex;
   max-width: 500px;
  
@@ -107,7 +129,9 @@ main{
     padding: 0.5rem;
 
   }
-  & input {
+  & input:not(input[type="checkbox"]) {
     width: 100%;
   }
 }
+
+/* Create Post */
