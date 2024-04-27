@@ -19,6 +19,16 @@
     <p>Product ID: <%= id %> </p>
     <p>Product NAME:  <%= name %> </p>
 
-  
+    <p id="datacurrent" data-current="<%= current %>">process.env.BASEURL </p>
+
+    
+    
+    <p>env.obj</p>
+    <%= envobj.BASEURL %>
+    <%= envobj.NODEJS %>
+    
+    <p data-gettingadata="<%= envobj.NODEJS %>"></p>
+
+  <script src="./js/movie.js"></script>
 </body>
 </html>

@@ -22,11 +22,12 @@ function domHandler(dados) {
   document.getElementById('productsCards').innerHTML = dados
     .map(
       (ele) =>
-        `
+`
 <div class="card">
 <h2><a href="/products/post/${ele.id}" target="_blank">${ele.name}</a></h2>
 <p class="itemid">ID:<span id="singleid">${ele.id}</span></p>
 <p>Price: ${ele.price}</p>
+<p>${ele?.bodyContent?.slice(0, 65) ?? ''}...</p>
 </div>
 `
     )

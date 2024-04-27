@@ -133,7 +133,7 @@ app.get('/products/post/:id', isAuth, (req, res, next) => {
   if (!product) {
     // maybe visite same single and return a 404 status
     // or create a 404 page
-    return res.render('404.ejs')
+    return res.render('404.ejs', { isAuthenticated: isAuth})
   }
   return res.render('single.ejs', { product, auth: req.isAuthenticated })
 })
@@ -143,11 +143,12 @@ app.get('/products', (req, res) => {
   const published = products.filter((post) => post.published === true)
 
   // chooice what send to client
-  const sendPosts = published?.map(({ id, name, price }) => {
+  const sendPosts = published?.map(({ id, name, price, bodyContent }) => {
     return {
       id,
       name,
       price,
+      bodyContent
     }
   })
   return res.json(sendPosts)
@@ -193,22 +194,29 @@ app.get('/productsadmin/:id', verifyJWT, (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-
   res.render('login.ejs', {})
 })
 
 app.post('/products', verifyJWT, (req, res) => {
-  const { name, price, published } = req.body
+  let { name, price, bodyContent, published } = req.body
+
+  const maxLength = 60
 
   // nem precisa, mais caso input nao tenha o attribute required send a message
-  if(!name && !price){
-      return res.status(406).json({ message: 'Fill out the fields' })
+  if (!name && !price) {
+    return res.status(406).json({ message: 'Fill out the fields' })
+  }
+
+  let nameTruncated = name
+  if (name.length > maxLength) {
+    name = nameTruncated.slice(0, maxLength)
   }
 
   const product = {
     id: randomUUID(),
     name,
     price,
+    bodyContent,
     slug: getSlugFromString(name),
     createdAt: createdAt(),
     published,
@@ -225,7 +233,7 @@ app.post('/products', verifyJWT, (req, res) => {
 
 app.put('/products/:id', verifyJWT, (req, res) => {
   const { id } = req.params
-  const { name, price, published } = req.body
+  const { name, price, bodyContent, published } = req.body
 
   const productIndex = products.findIndex((product) => product.id === id)
 
@@ -233,6 +241,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
     ...products[productIndex],
     name,
     price,
+    bodyContent,
     published,
   }
 
@@ -263,7 +272,7 @@ app.get('/movies/:name?/:id?', (req, res) => {
   // Perform operations based on the parameters
   // return res.render('movie.ejs', {product})
 
-  return res.render('movie.ejs', { product })
+  return res.render('movie.ejs', { product, current: process.env.BASEURL, envobj: process.env })
 })
 
 app.get('/status', (req, res) => {

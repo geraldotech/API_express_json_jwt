@@ -26,8 +26,10 @@ if (form) {
     // Set X-Requested-With header to XMLHttpRequest
     ajaxn.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
 
-    const objData = Object.fromEntries(data)
 
+    const objData = Object.fromEntries(data)    
+
+    // append the published  obj and boolean value
     objData.published = document.getElementById('published').checked
 
     const json = JSON.stringify(objData)
@@ -109,7 +111,9 @@ function domHandler(dados) {
     listAll.innerHTML += dados
       .map((val) => {
         return `<div>
-        <span>${val.name}</span> 
+        <span>
+        <a href="/products/post/${val.id}">${val.name?.slice(0, 25)}...</a>
+        </span> 
         <span>published:${val.published}</span>  
         <span class="buttons"><a href="/dashboard/edit/${val.id}" class="button secondary">EDIT</a>
         <button class="button danger" data-item="${val.id}">DELETE</button></span>  

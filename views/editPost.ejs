@@ -33,7 +33,8 @@
           <input
             name="name"
             type="text"
-            placeholder="produto" />
+            maxlength="60"
+            placeholder="name" />
         </div>
        <div>
         Price:  <input
@@ -41,6 +42,10 @@
         type="number"
         placeholder="price" />
        </div>
+       <div>
+        bodyContent:
+        <textarea name="itemBodyContent" id="itemBodyContent" cols="65" rows="10"></textarea>
+      </div>
        <div>
          <input type="checkbox" id="published" name="published">
          <label for="published" data="publishedstate">published</label>

@@ -75,8 +75,8 @@ are smart to detect local or domain deploy
 
 // POST body
 {
-"name":"bisXtra",
-"price":"5",
+"name":"bisXtra", //required
+"price":"5", //required
 "published" true
 
 "slug":"bisxtra", // auto
@@ -92,8 +92,7 @@ are smart to detect local or domain deploy
 
 
 // to implement new obj
-changes in post, put routes
-render body in homepage, single, edit forms
+changes in post, app.put ..., render body in homepage?, single?, edit forms and write
 
 
 ```
@@ -104,6 +103,13 @@ render body in homepage, single, edit forms
 - /login
 - /dashboard
     - /dashboard/edit
+
+
+## send to front process.env.BASEURL
+
+first render page router send obj gettings process.env value ` return res.render('movie.ejs', { product, current: process.env.BASEURL })`
+ejs receibe value and use as attribute ` <p id="datacurrent" data-current="<%= current %>">process.env.BASEURL </p>`
+clientside getvalue, check movie.ejs, move.js files
 
 
 

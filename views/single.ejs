@@ -12,18 +12,21 @@
       <title> <%= product.name %></title>
   </head>
   <body>
+    <%- include('./partials/Header', { isAuthenticated: auth }); %>
    <main class="single">
-    <h1>Single Page Template</h1>
-    <div class="single login">
+   
+<!--     <div class="single login">
       <% if (!auth) { %> 
         <p>Fazer login:<a href="/login">Login</a></p>
         <%   }  %> 
-    </div>
+    </div> -->
 
-    <p>Product: <%= product.name %> </p>
+
+    <h1><%= product.name %> </h1>
     <p>createdAt: <%= product.createdAt %> </p>
     <p>Price: <%= product.price %> </p>
-    <button>Buy</button>
+    <p>body: <%= product.bodyContent %> </p>
+    
    </main>
 
     <script></script>

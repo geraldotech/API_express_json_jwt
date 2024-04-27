@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" style="color-scheme:dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 page</title>
-  <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
-  <div class="page404">
-    
-  <h1>404 Not Found the resquested product or file not available 
-    
-  </h1>
-  <h1>
-    <a href="/">back to home page</a>
-  </h1>
-  </div>
-  
-</body>
+<%- include('./partials/Header', { isAuthenticated: true }); %>
+
+    <div class="page404">
+      <h1>404 Not Found the requested item not available</h1>
+      <h1>
+        <a href="/">back to home page</a>
+      </h1>
+    </div>
+  </body>
 </html>
