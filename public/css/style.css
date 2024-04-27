@@ -185,7 +185,6 @@ main{
  
   flex-direction: column;
   & div{
-    padding: 0.5rem;
 
   }
   & input:not(input[type="checkbox"]) {

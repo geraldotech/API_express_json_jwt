@@ -13,6 +13,9 @@ import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 import { getSlugFromString } from './utils/getSlugFromString.js'
 import { createdAt } from './utils/createdAt.js'
+import { isAuth } from './utils/isAuth.js'
+import { verifyJWT } from './utils/verifyJWT.js'
+import { movies } from './routes/movies.js'
 
 console.log(process.env.BASEURL)
 
@@ -133,7 +136,7 @@ app.get('/products/post/:id', isAuth, (req, res, next) => {
   if (!product) {
     // maybe visite same single and return a 404 status
     // or create a 404 page
-    return res.render('404.ejs', { isAuthenticated: isAuth})
+    return res.render('404.ejs', { isAuthenticated: isAuth })
   }
   return res.render('single.ejs', { product, auth: req.isAuthenticated })
 })
@@ -148,7 +151,7 @@ app.get('/products', (req, res) => {
       id,
       name,
       price,
-      bodyContent
+      bodyContent,
     }
   })
   return res.json(sendPosts)
@@ -156,25 +159,22 @@ app.get('/products', (req, res) => {
 
 // router autenticada envia todos os produtos para o dashboard
 app.get('/allproducts', verifyJWT, (req, res) => {
-  return res.json(products)
+  const reversePosts = products.map((post) => post).reverse()
+
+  return res.json(reversePosts)
 })
 
-/* app.get('/products/:id', (req, res) => {
-  const { id } = req.params
-  const product = products.find((product) => product.id === id)
-  const {action} = req.query
-  console.log(action)
-  if(action === 'edit'){
-    console.log(`is a admin request`)
-  } */
+
 app.get('/products/:id', (req, res) => {
   const { id } = req.params
-
   ///console.log(`is a admin request`)
   const product = products.find((product) => product.id === id && product.published)
+
   if (!product) {
-    res.send('not found')
+    // added res.status.. fix the Cannot set headers after they are sent to the client
+    res.status(404).send('Content not found')
   }
+
   return res.json(product)
 
   // if you return this file as template, will broken single router json
@@ -264,16 +264,7 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
 })
 
 // example multiple params and optional router
-app.get('/movies/:name?/:id?', (req, res) => {
-  const product = req.params
-
-  console.log(product)
-  // Access the category and id parameters
-  // Perform operations based on the parameters
-  // return res.render('movie.ejs', {product})
-
-  return res.render('movie.ejs', { product, current: process.env.BASEURL, envobj: process.env })
-})
+app.get('/movies/:name?/:id?', movies)
 
 app.get('/status', (req, res) => {
   res.json({ status: 201, message: 'SERVER IS ON' })
@@ -325,56 +316,6 @@ app.get('/logout', function (req, res) {
 
 // Check if the user is authenticated
 // some pages no needs protection, but can need knows user is loggin
-
-function isAuth(req, res, next) {
-  // Check if the token exists in the sessio
-  const token = req.session.token
-
-  if (!token) {
-    // If token doesn't exist, user is not logged in
-    req.isAuthenticated = false
-    return next() // Move to the next middleware/route handler
-  }
-
-  // Verify the token
-  jwt.verify(token, process.env.SECRET, function (err, decoded) {
-    if (err) {
-      req.isAuthenticated = false
-      return next()
-    }
-    // Token is valid, set user ID in the request object
-    req.userId = decoded?.id
-    req.isAuthenticated = true
-    next() // Move to the next middleware/route handler
-  })
-}
-
-//função que verifica se o JWT é ok
-function verifyJWT(req, res, next) {
-  //const token = req.headers['authorization']
-  const token = req.session.token
-
-  //console.log(req.session.token)
-  /*   if (!token) return res.status(401).send({ auth: false, message: 'Token não informado ou user não logado' }) */
-  if (!token) return res.status(401).send('<p>session expired <a href="/login">Sign in</a> </p>')
-
-  jwt.verify(token, process.env.SECRET, function (err, decoded) {
-    // if (err) return res.status(500).send({ auth: false, message: 'sessão expirada ou Token inválido' })
-
-    // handler custom return if ajax or browser
-    if (err) {
-      if (req.xhr) {
-        return res.status(500).json({ auth: false, message: 'sessão expirada ou Token inválido' })
-      } else {
-        return res.status(500).send('<p>sessão expirada ou Token inválido <a href="/login">login</a></p>')
-      }
-    }
-
-    req.userId = decoded.id
-
-    next()
-  })
-}
 
 const helloMiddleware = () => {
   return (req, res, next) => {
