@@ -1,13 +1,12 @@
 export function movies(req, res) {
   // example multiple params and optional router
-  
-    const product = req.params
+  const getparams = req.params
 
-    console.log(product)
-    // Access the category and id parameters
-    // Perform operations based on the parameters
-    // return res.render('movie.ejs', {product})
+  console.log(getparams)
 
-    return res.render('movie.ejs', { product, current: process.env.BASEURL, envobj: process.env })
-  
+  // Access the category and id parameters
+  // Perform operations based on the parameters
+  // return res.render('movie.ejs', {getparams})
+
+  return res.render('movie.ejs', { getparams, current: process.env.BASEURL, envobj: process.env })
 }

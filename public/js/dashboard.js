@@ -1,13 +1,12 @@
 /* == toggle production or devmode */
 const Production = location.port != ''
 const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
-const baseallproducts = Production ? 'http://localhost:3001/allproducts' : 'https://api.gpdev.tech/allproducts'
 
 // document.getElementById('base').href = baseURL
 // document.getElementById('base').innerHTML = baseURL
 
 // POST
-const form = document.querySelector('#mform')
+const form = document.querySelector('#formCreate')
 
 if (form) {
   form.onsubmit = function (event) {
@@ -26,8 +25,7 @@ if (form) {
     // Set X-Requested-With header to XMLHttpRequest
     ajaxn.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
 
-
-    const objData = Object.fromEntries(data)    
+    const objData = Object.fromEntries(data)
 
     // append the published  obj and boolean value
     objData.published = document.getElementById('published').checked
@@ -35,7 +33,6 @@ if (form) {
     const json = JSON.stringify(objData)
 
     ajaxn.onload = function (e) {
-      
       // Check if the request was a success
       if (this.readyState === XMLHttpRequest.DONE) {
         // Get and convert the responseText into JSON
@@ -46,7 +43,6 @@ if (form) {
 
       // === get all server response ===
 
-      
       // == server response ==
 
       const responseData = JSON.parse(ajaxn.response)
@@ -64,7 +60,6 @@ if (form) {
         })
       }
 
-
       if (ajaxn.status === 201) {
         // Parse the entire response as JSON
         const responseData = JSON.parse(ajaxn.response)
@@ -72,7 +67,6 @@ if (form) {
         const { message, product } = responseData
         Swal.fire(message)
       }
-
 
       // auto redirect no sweetAlert is required
       // if (ajaxn.status === 500) {
@@ -91,6 +85,8 @@ if (form) {
   }
 }
 
+/* show DOM */
+
 async function fetchToShowinDOM(url) {
   try {
     const req = await fetch(url)
@@ -102,7 +98,9 @@ async function fetchToShowinDOM(url) {
   }
 }
 
-fetchToShowinDOM(baseallproducts)
+// before ejs send obj direct html was build here
+// was required a special router, now not, obj is send direct from node server
+//fetchToShowinDOM(baseallproducts)
 
 function domHandler(dados) {
   const listAll = document.querySelector('#listall')
@@ -121,10 +119,12 @@ function domHandler(dados) {
       })
       .join(' ')
   }
-  addEventDelete()
 }
 
 // === DELETE handler ===
+
+// now just send the eventOnclick to get items id and makd direct ajax delete
+addEventDelete()
 
 function addEventDelete() {
   const deleteItem = document.querySelectorAll('[data-item]')

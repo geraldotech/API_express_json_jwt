@@ -1,34 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" style="color-scheme:dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New document</title>
-</head>
-<body>
- 
+<html
+  lang="en"
+  style="color-scheme: dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Movies Router</title>
+  </head>
+  <body>
 
-    <p>Product ID: <%= product?.id %> </p>
-    <p>Product NAME:  <%= product?.name %> </p>
+    <p>
+      <a href="/movies/9902/samsung">/movies/9902/samsung</a>
+      <a href="/movies/00/nodejs">/movies/00/american</a>
+    </p>
+    <p> ID: <%= getparams?.id %></p>
+    <p> NAME: <%= getparams?.value %></p>
 
+   <% if (getparams?.value === 'nodejs') { %>
+    <img src="https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_f0b606abb6d19089febc9faeeba5bc05/nodejs-development-services.png" width="10%" />
+    <% }  %>
 
-    <h2>===</h2>
+    <% const data = 'Geraldo' %>
+    <%= data %>
 
-    <% const {id, name} = product %>
+    <% const {id, value} = getparams %>
 
-    <p>Product ID: <%= id %> </p>
-    <p>Product NAME:  <%= name %> </p>
+    <p>ID: <%= id %></p>
+    <p>VALUE: <%= value %></p>
+    <hr>
 
-    <p id="datacurrent" data-current="<%= current %>">process.env.BASEURL </p>
+    <p
+      id="datacurrent"
+      data-current="<%= current %>">
+      process.env.BASEURL
+    </p>
 
-    
-    
-    <p>env.obj</p>
-    <%= envobj.BASEURL %>
-    <%= envobj.NODEJS %>
-    
+    <hr>
+
+    <h2>env.obj</h2>
+    <p><%= envobj.BASEURL %></p>
+
+    <p><%= envobj.NODEJS %></p>
+
     <p data-gettingadata="<%= envobj.NODEJS %>"></p>
+    <p>JS: <%= envobj?.JS %></p>
+    <p>abaixo getting direct from .env but exists? if nots apply</p>
+    <p>DOMAIN NAME: <%= envobj.DOMAINNAME || 'yourlocal' %></p>
 
-  <script src="./js/movie.js"></script>
-</body>
+
+    <div id="output"></div>
+
+    <script src="./js/lib/ejs.min.js"></script>
+    <script src="./js/movie.js"></script>
+    <script>
+     
+      document.getElementById('output').innerHTML = `sss`;
+    </script>
+  </body>
 </html>

@@ -7,31 +7,34 @@
   --warning-color: #ffc107; /* Warning color */
 }
 
-
-*{
+* {
   color-scheme: dark;
   box-sizing: border-box;
 }
 
 /*  General */
-header, nav, html, body{
+header,
+nav,
+html,
+body {
   margin: 0;
 }
 
-body{
+body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-header{
+header {
   text-align: center;
 }
 
-input, button{
+input,
+button {
   border: 1px solid #fff;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
-input{
+input {
   margin-block: 10px;
 }
 
@@ -45,19 +48,19 @@ input{
   cursor: pointer;
 }
 
-.button.primary{
+.button.primary {
   background-color: var(--primary-color);
 }
-.button.secondary{
+.button.secondary {
   background-color: var(--secondary-color);
 }
-.button.success{
+.button.success {
   background-color: var(--success-color);
 }
-.button.warning{
+.button.warning {
   background-color: var(--warning-color);
 }
-.button.danger{
+.button.danger {
   background-color: var(--danger-color);
 }
 
@@ -65,19 +68,18 @@ input{
   background-color: #0056b3;
 }
 
-
 /* Navbar */
 
-.nav{
+.nav {
   padding: 1rem;
   background: #333;
   margin-bottom: 1rem;
- & a{
-  color: #fff;
- }
+  & a {
+    color: #fff;
+  }
 }
 
-.topmenu{
+.topmenu {
   display: flex;
   justify-content: space-around;
   max-width: 400px;
@@ -85,14 +87,14 @@ input{
 
 /* Home Page */
 
-#singleid{
+#singleid {
   cursor: pointer;
-  &:hover{
+  &:hover {
     color: seagreen;
   }
 }
 
-#productsCards{
+#productsCards {
   display: flex;
   flex-wrap: wrap;
   margin: 2rem auto;
@@ -101,17 +103,16 @@ input{
   gap: 15px;
 }
 
-.card{
+.card {
   background-color: #333;
   color: #fff;
   padding: 0.5rem;
   max-width: 350px;
   width: 100%;
   margin-block: 5px;
- 
 }
 
-.card #singleid{
+.card #singleid {
   font-size: small;
 }
 
@@ -122,74 +123,78 @@ input{
 .card a {
   color: #2a95ff;
   text-decoration: none;
-  &:hover{
+  &:hover {
     color: blue;
     transition: 500ms;
   }
 }
 
 /* Login */
-#errorMessage{
+#errorMessage {
   display: none;
 }
 
-.single.login{
+.single.login {
   background-color: #333;
   padding: 1rem;
 }
 
-.page404{
+.page404 {
   text-align: center;
 }
 
 /* Dashboard */
 
-.dashboard{
+.dashboard {
   max-width: 800px;
   margin: 0 auto;
 }
 
-main{
+main {
   padding: 1rem;
 }
 
-
-#listall div{
+#listall div {
   display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 1rem;
-    padding: .5rem;
-    margin: .2rem;
-    background-color: #333;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  padding: 0.5rem;
+  margin: 0.2rem;
+  background-color: #333;
+  align-items: center;
+  & .buttons {
+    display: flex;
+    color: rebeccapurple;
     align-items: center;
-    & .buttons {
-      display: flex;
-      color: rebeccapurple;
-      align-items: center;
-      justify-content: space-between;
-    }
-    /* mobile */
-    @media (max-width: 560px){
-      grid-template-columns: 1fr;
-    }
+    justify-content: space-between;
+  }
+  /* mobile */
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 }
-
-
-
 
 /* Edit Post */
 
-#mformPU, #mform {
+#mformPU,
+#formCreate {
   display: flex;
   max-width: 500px;
- 
-  flex-direction: column;
-  & div{
 
+  flex-direction: column;
+  & div {
   }
-  & input:not(input[type="checkbox"]) {
+  & input:not(input[type='checkbox']), textarea {
     width: 100%;
   }
 }
 
-/* Create Post */
+/* Single */
+.single {
+  background: #1a1919;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+footer {
+  text-align: center;
+}

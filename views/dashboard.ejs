@@ -9,10 +9,9 @@
       content="width=device-width, initial-scale=1.0" />
     <title>Express API</title>
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
       rel="stylesheet"
       href="./css/style.css" />
@@ -23,20 +22,51 @@
       <!-- pass auth stat to nav, dashboard only show if user is loggin, so nav no needs this information -->
       <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
     </header>
-    
+
     <main class="dashboard">
       <a
         id="base"
         target="_blank"></a>
-        <a class="button primary" href="/dashboard/createnew">Create New</a>
+      <a
+        class="button primary"
+        href="/dashboard/createnew"
+        >Create New</a
+      >
 
-        <form action="">
-          <input type="search" placeholder="seach products" disabled>
-        </form>
-        <hr />
+      <form action="">
+        <input
+          type="search"
+          placeholder="search products"
+          disabled />
+      </form>
+      <hr />
       <div id="listall"></div>
 
-    
+      <!-- no fetch router need data coming direct -->
+      <% const reversedPosts = allpro.map((post) => post).reverse() %>
+
+      <div id="listall">
+        <% for (let i = 0; i < reversedPosts.length; i++) { %>
+        <div>
+          <span>
+            <a href="/products/post/<%= reversedPosts[i].id %>"><%= reversedPosts[i].name.slice(0, 30) %></a>
+          </span>
+          <span>published: <%= reversedPosts[i].published %></span>
+          <span class="buttons"
+            ><a
+              href="/dashboard/edit/<%= reversedPosts[i].id %>"
+              class="button secondary"
+              >EDIT</a
+            >
+            <button
+              class="button danger"
+              data-item="<%= reversedPosts[i].id %>">
+              DELETE
+            </button></span
+          >
+        </div>
+        <% } %>
+      </div>
     </main>
 
     <script src="./js/dashboard.js"></script>

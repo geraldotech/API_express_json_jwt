@@ -26,6 +26,11 @@ This project setup a RestAPI with all methods, no database is used, files are st
 ### baseURL 
 are smart to detect local or domain deploy
 
+
+###  dashboard.ejs before ejs send obj direct html was build here
+
+ was required a special router, now not, obj is send direct from node server fetchToShowinDOM(baseallproducts)
+
 ### Pages how build:
 
 ```js
@@ -107,10 +112,9 @@ changes in post, app.put ..., render body in homepage?, single?, edit forms and 
 
 ## send to front process.env.BASEURL
 
-first render page router send obj gettings process.env value ` return res.render('movie.ejs', { product, current: process.env.BASEURL })`
-ejs receibe value and use as attribute ` <p id="datacurrent" data-current="<%= current %>">process.env.BASEURL </p>`
-clientside getvalue, check movie.ejs, move.js files
-
+- first render page router send obj gettings process.env value ` return res.render('movie.ejs', { product, current: process.env.BASEURL })`
+- ejs receibe value and use as attribute ` <p id="datacurrent" data-current="<%= current %>">process.env.BASEURL </p>`
+- clientside getvalue, check movie.ejs, move.js files
 
 
 ## About cors:

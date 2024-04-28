@@ -69,8 +69,6 @@ mformPU.onsubmit = function () {
 
   const json = JSON.stringify(data)
 
-  console.log(`json`, json)
-
   ajaxn.send(json)
 
   ajaxn.onload = function () {

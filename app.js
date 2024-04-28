@@ -17,10 +17,16 @@ import { isAuth } from './utils/isAuth.js'
 import { verifyJWT } from './utils/verifyJWT.js'
 import { movies } from './routes/movies.js'
 
-console.log(process.env.BASEURL)
 
 const port = 3001
 const app = express()
+
+// if user dont define this variable, so get localhost
+// send it to files that use fetch
+const domainNAME = process.env.DOMAINNAME || `http://localhost:${port}`
+console.log(domainNAME)
+
+//console.log(process.env.BASEURL)
 
 // Parse URL-encoded bodies with extended syntax
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -107,8 +113,8 @@ app.get('/dashboard/:action?', verifyJWT, (req, res) => {
 
   if (action === 'edit') {
     return res.send('edit template')
-  }
-  return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
+  } //allpro send all products instead use a fetch router
+  return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allpro: products })
 })
 
 // router edit and delete verifyJWT
@@ -153,17 +159,10 @@ app.get('/products', (req, res) => {
       price,
       bodyContent,
     }
-  })
+  }).reverse()
+
   return res.json(sendPosts)
 })
-
-// router autenticada envia todos os produtos para o dashboard
-app.get('/allproducts', verifyJWT, (req, res) => {
-  const reversePosts = products.map((post) => post).reverse()
-
-  return res.json(reversePosts)
-})
-
 
 app.get('/products/:id', (req, res) => {
   const { id } = req.params
@@ -264,7 +263,7 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
 })
 
 // example multiple params and optional router
-app.get('/movies/:name?/:id?', movies)
+app.get('/movies/:id?/:value?', movies)
 
 app.get('/status', (req, res) => {
   res.json({ status: 201, message: 'SERVER IS ON' })
