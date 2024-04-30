@@ -46,10 +46,24 @@
         bodyContent:
         <textarea name="itemBodyContent" id="itemBodyContent" cols="65" rows="10"></textarea>
       </div>
-       <div>
-         <input type="checkbox" id="published" name="published">
-         <label for="published" data="publishedstate">published</label>
+      <div  class="formOptions">
+
+      <span>
+        <label for="selectCat">Category:</label>
+        <select name="category" id="selectCat">
+          <% for(const cat of allcats) { %>
+            <option value="<%= cat %>" name="<%= cat %>"><%= cat %></option>
+            <% } %>
+        </select>
+        
+      </span>
+      <span>
+        <input type="checkbox" id="published" name="published">
+        <label for="published" data="publishedstate">published</label>
+      </span>
+
        </div>
+      
       <div>
         <input class="button success"
         type="submit"

@@ -2,7 +2,7 @@
 
     <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
 
-    <main class="dashboard">
+    <main class="dashboardcreate">
       <h2>Create New Product</h2>
       <form
         id="formCreate"
@@ -27,10 +27,21 @@
         content:
         <textarea name="bodyContent" id="" cols="60" rows="10"></textarea>
       </div>
-       <div>
-         <input name="checked" type="checkbox" id="published">
-        <label for="published">published</label>
+       <div class="formOptions">
+         <span>
+           <label for="selectCat">Category:</label>
+           <select name="category" id="selectCat">
+             <% for(const cat of allcats) { %>
+              <option value="<%= cat %>" name="<%= cat %>"><%= cat %></option>
+              <% } %>
+            </select>
+          </span>
+          <span>
+            <input name="checked" type="checkbox" id="published">
+            <label for="published">published</label>
+          </span>
        </div>
+      
        <div>
         <input
         class="button primary"

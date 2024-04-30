@@ -34,6 +34,10 @@ button {
   padding: 0.5rem;
 }
 
+input[type='submit'] {
+  margin-top: 50px;
+}
+
 input {
   margin-block: 10px;
 }
@@ -48,7 +52,20 @@ input {
   cursor: pointer;
 }
 
+.smallbtn {
+  display: inline-block;
+  padding: 10px;
+  font-size: small;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  /* border-radius: 5px; */
+  cursor: pointer;
+  background-color: var(--secondary-color);
+}
+
 .button.primary {
+
   background-color: var(--primary-color);
 }
 .button.secondary {
@@ -146,15 +163,16 @@ input {
 /* Dashboard */
 
 .dashboard {
-  max-width: 800px;
+  max-width: 1500px;
   margin: 0 auto;
+  color: #007bff;
 }
 
 main {
   padding: 1rem;
 }
 
-#listall div {
+#listall .item {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1rem;
@@ -165,8 +183,9 @@ main {
   & .buttons {
     display: flex;
     color: rebeccapurple;
+    gap: 1rem;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: space-between;
   }
   /* mobile */
   @media (max-width: 560px) {
@@ -182,9 +201,8 @@ main {
   max-width: 500px;
 
   flex-direction: column;
-  & div {
-  }
-  & input:not(input[type='checkbox']), textarea {
+  & input:not(input[type='checkbox']),
+  textarea {
     width: 100%;
   }
 }
@@ -198,3 +216,18 @@ main {
 footer {
   text-align: center;
 }
+
+/* Forms create and edit */
+
+#selectCat{
+  border: none;
+  padding: 0.5rem;
+}
+
+.formOptions {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+
+

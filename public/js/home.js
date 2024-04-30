@@ -28,6 +28,7 @@ function domHandler(dados) {
 <p class="itemid">ID:<span id="singleid">${ele.id}</span></p>
 <p>Price: ${ele.price}</p>
 <p>${ele?.bodyContent?.slice(0, 65) ?? ''}...</p>
+<p><strong class="smallbtn primary">${ele.category}</strong></p>
 </div>
 `
     )

@@ -16,7 +16,7 @@ import { createdAt } from './utils/createdAt.js'
 import { isAuth } from './utils/isAuth.js'
 import { verifyJWT } from './utils/verifyJWT.js'
 import { movies } from './routes/movies.js'
-
+import { categories } from './utils/getCategories.js'
 
 const port = 3001
 const app = express()
@@ -100,31 +100,39 @@ app.get('/', isAuth, (req, res, next) => {
 
 // router dashboard and create post
 
-app.get('/dashboard/:action?', verifyJWT, (req, res) => {
-  const userId = req.query.userId // Retrieve userId from query parameters
-  // leverage if return userid == loggin
-  const isAuth = req.userId ? true : false
+app.get('/dashboard/:action?', verifyJWT, async (req, res) => {
+  try {
+    const userId = req.query.userId // Retrieve userId from query parameters
+    // leverage if return userid == loggin
+    const isAuth = req.userId ? true : false
 
-  const { action } = req.params
-  if (action === 'createnew') {
+    const { action } = req.params
+
     // Handle 'createnew' action
-    return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth })
-  }
+    if (action === 'createnew') {
+      const allcats = await categories()
+      return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allcats })
+    }
 
-  if (action === 'edit') {
-    return res.send('edit template')
-  } //allpro send all products instead use a fetch router
-  return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allpro: products })
+    if (action === 'edit') {
+      return res.send('edit template')
+    } //allpro send all products instead use a fetch router
+    return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allpro: products })
+  } catch (err) {
+    console.log(`err`, err)
+  }
 })
 
 // router edit and delete verifyJWT
-app.get('/dashboard/edit/:id', verifyJWT, (req, res) => {
+app.get('/dashboard/edit/:id', verifyJWT, async (req, res) => {
   const userId = req.query.userId // Retrieve userId from query parameters
   // leverage if return userid == loggin
   const isAuth = req.userId ? true : false
 
   const { id } = req.params
-  res.render('editPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id })
+
+  const allcats = await categories()
+  res.render('editPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id, allcats })
 
   //return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth } );
 })
@@ -152,14 +160,17 @@ app.get('/products', (req, res) => {
   const published = products.filter((post) => post.published === true)
 
   // chooice what send to client
-  const sendPosts = published?.map(({ id, name, price, bodyContent }) => {
-    return {
-      id,
-      name,
-      price,
-      bodyContent,
-    }
-  }).reverse()
+  const sendPosts = published
+    ?.map(({ id, name, price, bodyContent, category }) => {
+      return {
+        id,
+        name,
+        price,
+        bodyContent,
+        category
+      }
+    })
+    .reverse()
 
   return res.json(sendPosts)
 })
@@ -197,7 +208,7 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/products', verifyJWT, (req, res) => {
-  let { name, price, bodyContent, published } = req.body
+  let { name, price, bodyContent, published, category } = req.body
 
   const maxLength = 60
 
@@ -219,6 +230,7 @@ app.post('/products', verifyJWT, (req, res) => {
     slug: getSlugFromString(name),
     createdAt: createdAt(),
     published,
+    category
   }
 
   products.push(product)
@@ -232,7 +244,7 @@ app.post('/products', verifyJWT, (req, res) => {
 
 app.put('/products/:id', verifyJWT, (req, res) => {
   const { id } = req.params
-  const { name, price, bodyContent, published } = req.body
+  const { name, price, bodyContent, published, category } = req.body
 
   const productIndex = products.findIndex((product) => product.id === id)
 
@@ -242,6 +254,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
     price,
     bodyContent,
     published,
+    category
   }
 
   productFile()

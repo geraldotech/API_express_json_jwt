@@ -10,26 +10,22 @@
     <title>Movies Router</title>
   </head>
   <body>
-
     <p>
       <a href="/movies/9902/samsung">/movies/9902/samsung</a>
       <a href="/movies/00/nodejs">/movies/00/american</a>
     </p>
-    <p> ID: <%= getparams?.id %></p>
-    <p> NAME: <%= getparams?.value %></p>
+    <p>ID: <%= getparams?.id %></p>
+    <p>NAME: <%= getparams?.value %></p>
 
-   <% if (getparams?.value === 'nodejs') { %>
-    <img src="https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_f0b606abb6d19089febc9faeeba5bc05/nodejs-development-services.png" width="10%" />
-    <% }  %>
-
-    <% const data = 'Geraldo' %>
-    <%= data %>
-
-    <% const {id, value} = getparams %>
+    <% if (getparams?.value === 'nodejs') { %>
+    <img
+      src="https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_f0b606abb6d19089febc9faeeba5bc05/nodejs-development-services.png"
+      width="10%" />
+    <% } %> <% const data = 'Geraldo' %> <%= data %> <% const {id, value} = getparams %>
 
     <p>ID: <%= id %></p>
     <p>VALUE: <%= value %></p>
-    <hr>
+    <hr />
 
     <p
       id="datacurrent"
@@ -37,7 +33,7 @@
       process.env.BASEURL
     </p>
 
-    <hr>
+    <hr />
 
     <h2>env.obj</h2>
     <p><%= envobj.BASEURL %></p>
@@ -49,14 +45,27 @@
     <p>abaixo getting direct from .env but exists? if nots apply</p>
     <p>DOMAIN NAME: <%= envobj.DOMAINNAME || 'yourlocal' %></p>
 
-
     <div id="output"></div>
+
+    <select
+      name=""
+      id="cateSelected">
+      <% for (let cat of categories) { %>
+      <option value="<%= cat %>"><%= cat %></option>
+
+      <% } %>
+    </select>
 
     <script src="./js/lib/ejs.min.js"></script>
     <script src="./js/movie.js"></script>
     <script>
-     
-      document.getElementById('output').innerHTML = `sss`;
+      document.getElementById('output').innerHTML = `Javascript ClientSide`
+
+      const cateSelected = document.querySelector('#cateSelected')
+
+      cateSelected.onchange = function () {
+        console.log(this.value)
+      }
     </script>
   </body>
 </html>

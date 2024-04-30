@@ -1,5 +1,6 @@
 # API express json jwt
-### Express() server +  FormData + Ajax + jsonwebtoken + express session
+
+### Express() server + FormData + Ajax + jsonwebtoken + express session
 
 This project setup a RestAPI with all methods, no database is used, files are stored in a local .json file
 
@@ -20,16 +21,16 @@ This project setup a RestAPI with all methods, no database is used, files are st
 
 # Install REST Client for VSCode to test methods
 
-# set cors origin 
+# set cors origin
 ```
 
-### baseURL 
+### baseURL
+
 are smart to detect local or domain deploy
 
+### dashboard.ejs before ejs send obj direct html was build here
 
-###  dashboard.ejs before ejs send obj direct html was build here
-
- was required a special router, now not, obj is send direct from node server fetchToShowinDOM(baseallproducts)
+was required a special router, now not, obj is send direct from node server fetchToShowinDOM(baseallproducts)
 
 ### Pages how build:
 
@@ -38,7 +39,7 @@ are smart to detect local or domain deploy
 // Header.ejs // use main.js for all pages
 <html>
 <head>
-    
+
 <script src="/js/main.js" defer></script>
 <head>
 <body>
@@ -54,8 +55,7 @@ are smart to detect local or domain deploy
 <script src="myCustom.js"></script>
 </body>
 </html>
- ```
-
+```
 
 # Routers:
 
@@ -69,7 +69,7 @@ are smart to detect local or domain deploy
 - GET /products/post/:id
 
 // example multiple params and optional router
-- GET /movies/:name?/:id? 
+- GET /movies/:name?/:id?
     - /movies/american/2
 
 - PUT /products/:id
@@ -85,7 +85,7 @@ are smart to detect local or domain deploy
 "published" true
 
 "slug":"bisxtra", // auto
-"createdAt":"20/04/24 18:54:17", // auto 
+"createdAt":"20/04/24 18:54:17", // auto
 "id":"ecaa22f1-4da7-45ce-b4b0-a5132ecc600b" // auto
 "}
 
@@ -99,7 +99,6 @@ are smart to detect local or domain deploy
 // to implement new obj
 changes in post, app.put ..., render body in homepage?, single?, edit forms and write
 
-
 ```
 
 ## Pages
@@ -107,8 +106,7 @@ changes in post, app.put ..., render body in homepage?, single?, edit forms and 
 - /
 - /login
 - /dashboard
-    - /dashboard/edit
-
+  - /dashboard/edit
 
 ## send to front process.env.BASEURL
 
@@ -116,11 +114,9 @@ changes in post, app.put ..., render body in homepage?, single?, edit forms and 
 - ejs receibe value and use as attribute ` <p id="datacurrent" data-current="<%= current %>">process.env.BASEURL </p>`
 - clientside getvalue, check movie.ejs, move.js files
 
-
 ## About cors:
 
 [https://expressjs.com/en/resources/middleware/cors.html](https://expressjs.com/en/resources/middleware/cors.html)
 [REF](https://www.youtube.com/watch?v=fm4_EuCsQwg)
 
 ## JWT implementation thanks to [ref](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/)
-

@@ -47,11 +47,15 @@
 
       <div id="listall">
         <% for (let i = 0; i < reversedPosts.length; i++) { %>
-        <div>
+        <div class="item">
           <span>
             <a href="/products/post/<%= reversedPosts[i].id %>"><%= reversedPosts[i].name.slice(0, 30) %></a>
           </span>
-          <span>published: <%= reversedPosts[i].published %></span>
+
+          <div>
+            <span class="button smallbtn  <%= reversedPosts[i].published ? 'success' : 'danger' %>">published: <%= reversedPosts[i].published %></span>
+            <span class="button">category: <%= reversedPosts[i].category ? reversedPosts[i].category : 'null' %></span>
+          </div>
           <span class="buttons"
             ><a
               href="/dashboard/edit/<%= reversedPosts[i].id %>"

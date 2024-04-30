@@ -2,6 +2,21 @@ const Production = location.port != ''
 const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
 const productsadmin = Production ? 'http://localhost:3001/productsadmin/' : 'https://api.gpdev.tech/productsadmin/'
 
+
+function setSelectedOption(value) {
+  const selectCat = document.getElementById('selectCat');
+  const options = selectCat.options;
+  
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].value === value) {
+      options[i].selected = true;
+      break;
+    }
+  }
+}
+
+
+
 const productId = document.getElementById('productId').dataset.id
 const labelText = document.querySelector('[data=publishedstate]')
 
@@ -12,6 +27,7 @@ let itemPrice = document.mformPU.price
 let createdAt = document.mformPU.createdAt
 let published = document.mformPU.published
 let itemBodyContent = document.mformPU.itemBodyContent
+let itemCategory = document.mformPU.category
 
 let publishedStatus
 
@@ -23,6 +39,8 @@ fetch(`${productsadmin}${productId}`)
     itemName.value = data.name
     itemPrice.value = data.price
     itemBodyContent.textContent = data.bodyContent
+    // dynamic set selected option
+    setSelectedOption(data.category);
 
     published.checked = data.published // send check to button
     publishedStatus = data.published // send check to status
@@ -53,6 +71,7 @@ mformPU.onsubmit = function () {
     price: itemPrice.value,
     bodyContent: bodyContent.value,
     published: publishedStatus,
+    category: itemCategory.value
   }
 
   const ajaxn = new XMLHttpRequest()

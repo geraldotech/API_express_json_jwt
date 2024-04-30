@@ -7,9 +7,12 @@ const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gp
 
 // POST
 const form = document.querySelector('#formCreate')
+const selectCat = document.querySelector('#selectCat')
 
 if (form) {
+
   form.onsubmit = function (event) {
+    
     event.preventDefault()
 
     const ajaxn = new XMLHttpRequest()
@@ -26,11 +29,13 @@ if (form) {
     ajaxn.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
 
     const objData = Object.fromEntries(data)
+    console.log(`json`, objData)
 
     // append the published  obj and boolean value
     objData.published = document.getElementById('published').checked
 
     const json = JSON.stringify(objData)
+
 
     ajaxn.onload = function (e) {
       // Check if the request was a success
