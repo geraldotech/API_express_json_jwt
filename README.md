@@ -116,6 +116,14 @@ changes in post, app.put ..., render body in homepage?, single?, edit forms and 
 - ejs receibe value and use as attribute ` <p id="datacurrent" data-current="<%= current %>">process.env.BASEURL </p>`
 - clientside getvalue, check movie.ejs, move.js files
 
+## trick until setup the env
+
+```js
+const Production = location.port != ''
+const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
+const productsadmin = Production ? 'http://localhost:3001/productsadmin/' : 'https://api.gpdev.tech/productsadmin/'
+```
+
 ## About cors:
 
 [https://expressjs.com/en/resources/middleware/cors.html](https://expressjs.com/en/resources/middleware/cors.html)

@@ -24,7 +24,8 @@ const app = express()
 // if user dont define this variable, so get localhost
 // send it to files that use fetch
 const domainNAME = process.env.DOMAINNAME || `http://localhost:${port}`
-console.log(domainNAME)
+const BASEURL = process.env.BASEURL || `http://localhost:${port}`
+console.log(`your using url`, BASEURL)
 
 //console.log(process.env.BASEURL)
 
@@ -95,7 +96,7 @@ app.get('/', isAuth, (req, res, next) => {
     res.render('index.ejs', { auth: true, info: 'Express API, cors, ejs' })
   } else {
   } */
-  res.render('home.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT', isAuthenticated: isAuth, baseURL: process.env.BASEURL })
+  res.render('home.ejs', { auth: req.isAuthenticated, header: 'Express API, cors, ejs, JWT', isAuthenticated: isAuth, BASEURL })
 })
 
 // router dashboard and create post
@@ -117,7 +118,7 @@ app.get('/dashboard/:action?', verifyJWT, async (req, res) => {
     if (action === 'edit') {
       return res.send('edit template')
     } //allpro send all products instead use a fetch router
-    return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allpro: products })
+    return res.render('dashboard.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allpro: products, BASEURL })
   } catch (err) {
     console.log(`err`, err)
   }
@@ -132,7 +133,7 @@ app.get('/dashboard/edit/:id', verifyJWT, async (req, res) => {
   const { id } = req.params
 
   const allcats = await categories()
-  res.render('editPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id, allcats })
+  res.render('editPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id, allcats, BASEURL })
 
   //return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth } );
 })

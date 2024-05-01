@@ -1,7 +1,8 @@
-/* == toggle production or devmode */
-const Production = location.port != ''
-const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
-const productsadmin = Production ? 'http://localhost:3001/productsadmin/' : 'https://api.gpdev.tech/productsadmin/'
+// get baseurl from server in fronend
+const getBASEURL = document.querySelector('p[data-baseurl]').dataset.baseurl
+
+const baseURL = `${getBASEURL}/products/`
+const productsadmin = `${getBASEURL}/productsadmin/`
 
 // document.getElementById('base').href = baseURL
 // document.getElementById('base').innerHTML = baseURL

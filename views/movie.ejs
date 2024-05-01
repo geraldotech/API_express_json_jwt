@@ -39,8 +39,10 @@
     <p><%= envobj.BASEURL %></p>
 
     <p><%= envobj.NODEJS %></p>
+    <p><%= envobj.DOMAINNAME %></p>
 
     <p data-gettingadata="<%= envobj.NODEJS %>"></p>
+    <p data-getdomain="<%= envobj.DOMAINNAME %>"></p>
     <p>JS: <%= envobj?.JS %></p>
     <p>abaixo getting direct from .env but exists? if nots apply</p>
     <p>DOMAIN NAME: <%= envobj.DOMAINNAME || 'yourlocal' %></p>

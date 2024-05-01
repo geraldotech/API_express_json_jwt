@@ -1,9 +1,6 @@
-/* == toggle production or devmode */
+// get baseurl from server in fronend
+const getBASEURL = document.querySelector('p[data-baseurl]').dataset.baseurl
 
-// se nao tem porta
-const Production = location.port != ''
-const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
-//console.log(`baseURL`, baseURL)
 
 async function fetchToShowinDOM(url) {
   try {
@@ -15,7 +12,7 @@ async function fetchToShowinDOM(url) {
     console.log(err)
   }
 }
-fetchToShowinDOM(baseURL)
+fetchToShowinDOM(`${getBASEURL}/products`)
 
 function domHandler(dados) {
  

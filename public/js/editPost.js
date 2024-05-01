@@ -1,21 +1,20 @@
-const Production = location.port != ''
-const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
-const productsadmin = Production ? 'http://localhost:3001/productsadmin/' : 'https://api.gpdev.tech/productsadmin/'
+// get baseurl from server in fronend
+const getBASEURL = document.querySelector('p[data-baseurl]').dataset.baseurl
 
+const baseURL =  `${getBASEURL}/products/`
+const productsadmin = `${getBASEURL}/productsadmin/` 
 
 function setSelectedOption(value) {
-  const selectCat = document.getElementById('selectCat');
-  const options = selectCat.options;
-  
+  const selectCat = document.getElementById('selectCat')
+  const options = selectCat.options
+
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === value) {
-      options[i].selected = true;
-      break;
+      options[i].selected = true
+      break
     }
   }
 }
-
-
 
 const productId = document.getElementById('productId').dataset.id
 const labelText = document.querySelector('[data=publishedstate]')
@@ -40,7 +39,7 @@ fetch(`${productsadmin}${productId}`)
     itemPrice.value = data.price
     itemBodyContent.textContent = data.bodyContent
     // dynamic set selected option
-    setSelectedOption(data.category);
+    setSelectedOption(data.category)
 
     published.checked = data.published // send check to button
     publishedStatus = data.published // send check to status
@@ -53,7 +52,7 @@ function setLabelTextFromState() {
   published.addEventListener('click', function () {
     publishedStatus = published.checked
     labelText.textContent = publishedStatus ? 'published' : 'unpublished'
-   //labelText.innerHTML = publishedStatus ? `<i class='bx bx-toggle-left' ></i>` : `<i class='bx bxs-toggle-right' ></i>`
+    //labelText.innerHTML = publishedStatus ? `<i class='bx bx-toggle-left' ></i>` : `<i class='bx bxs-toggle-right' ></i>`
   })
 }
 
@@ -72,7 +71,7 @@ mformPU.onsubmit = function () {
     price: itemPrice.value,
     bodyContent: bodyContent.value,
     published: publishedStatus,
-    category: itemCategory.value
+    category: itemCategory.value,
   }
 
   const ajaxn = new XMLHttpRequest()
@@ -135,6 +134,3 @@ mformPU.onsubmit = function () {
     }
   }
 }
-
-
-
