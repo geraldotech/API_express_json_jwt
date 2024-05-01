@@ -112,7 +112,7 @@ app.get('/dashboard/:action?', verifyJWT, async (req, res) => {
     // Handle 'createnew' action
     if (action === 'createnew') {
       const allcats = await categories()
-      return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allcats })
+      return res.render('createPost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, allcats, BASEURL })
     }
 
     if (action === 'edit') {

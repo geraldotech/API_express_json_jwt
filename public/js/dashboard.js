@@ -218,9 +218,6 @@ const bodyContent = document.querySelector('dialog[dialog] #bodyContent')
 const createdAt = document.querySelector('dialog[dialog] #createdAt')
 const price = document.querySelector('dialog[dialog] #price')
 
-
-
-
 btn.forEach((link) => {
   link.addEventListener('click', (e) => {
     dialog.showModal()
