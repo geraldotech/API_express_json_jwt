@@ -16,8 +16,13 @@
 header,
 nav,
 html,
+h1, 
 body {
   margin: 0;
+}
+
+a {
+  text-decoration: none;
 }
 
 body {
@@ -32,6 +37,7 @@ input,
 button {
   border: 1px solid #fff;
   padding: 0.5rem;
+  cursor: pointer;
 }
 
 input[type='submit'] {
@@ -56,6 +62,9 @@ input {
   display: inline-block;
   padding: 10px;
   font-size: small;
+  max-width: 150px;
+  text-align: center;
+  width: 100%;
   color: #fff;
   text-decoration: none;
   border: none;
@@ -65,7 +74,6 @@ input {
 }
 
 .button.primary {
-
   background-color: var(--primary-color);
 }
 .button.secondary {
@@ -98,8 +106,15 @@ input {
 
 .topmenu {
   display: flex;
-  justify-content: space-around;
-  max-width: 400px;
+  justify-content: space-between;
+  max-width: 100%;
+  width: 100%;
+}
+
+.topmenu span {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-evenly;
 }
 
 /* Home Page */
@@ -165,7 +180,7 @@ input {
 .dashboard {
   max-width: 1500px;
   margin: 0 auto;
-  color: #007bff;
+  color: #fff;
 }
 
 main {
@@ -217,9 +232,14 @@ footer {
   text-align: center;
 }
 
+
+.single .header{
+  padding: .3rem;
+  background-color: #333;
+}
 /* Forms create and edit */
 
-#selectCat{
+#selectCat {
   border: none;
   padding: 0.5rem;
 }
@@ -231,3 +251,13 @@ footer {
 }
 
 
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0.3);
+}
+
+dialog {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1em rgb(0 0 0 / 0.3);
+  width: 80%;
+}

@@ -167,7 +167,7 @@ app.get('/products', (req, res) => {
         name,
         price,
         bodyContent,
-        category
+        category,
       }
     })
     .reverse()
@@ -191,12 +191,28 @@ app.get('/products/:id', (req, res) => {
   //return res.render("single.ejs", {product});
 })
 
+app.get('/products/search/category/?', async (req, res) => {
+  // /products/search/category?q=android
+  const isAuth = req.userId ? true : false 
+  const { q } = req.query
+
+  if (q) {
+    const postsByCategory = products.filter((post) => post.category.toLowerCase() === q.toLowerCase() && post.published)
+
+    return res.render('category.ejs', { currentCategory: q, postsByCategory, isAuthenticated: isAuth })
+  }
+  // como o cadastro de posts é by form, nao tem risco de ter category duplicado, just return all categories
+  const allcats = await categories()
+  return res.render('categories.ejs', { isAuthenticated: isAuth, allcats })
+})
+
 // router autenticada envia todo os produtos para o editAdmin
 app.get('/productsadmin/:id', verifyJWT, (req, res) => {
   const { id } = req.params
 
   ///console.log(`is a admin request`)
   const product = products.find((product) => product.id === id)
+
   return res.json(product)
 
   // if you return this file as template, will broken single router json
@@ -230,7 +246,7 @@ app.post('/products', verifyJWT, (req, res) => {
     slug: getSlugFromString(name),
     createdAt: createdAt(),
     published,
-    category
+    category,
   }
 
   products.push(product)
@@ -254,7 +270,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
     price,
     bodyContent,
     published,
-    category
+    category,
   }
 
   productFile()

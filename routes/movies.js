@@ -4,6 +4,9 @@ export function movies(req, res) {
   // example multiple params and optional router
   const getparams = req.params
 
+  const {id, value} = req.params
+  //console.log(id, value)
+
 
   let data = ''
   categories()

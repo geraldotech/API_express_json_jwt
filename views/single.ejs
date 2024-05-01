@@ -11,11 +11,15 @@
     </div> -->
 
 
+   <div class="header">
     <h1><%= product.name %> </h1>
     <p>createdAt: <%= product.createdAt %> </p>
+    <p>Category: 
+     <a href="/products/search/category?q=<%= product.category %>"> <%= product.category %></a>
+    </p>
     <p>Price: <%= product.price %> </p>
-    <p>body: <%= product.bodyContent %> </p>
-    <p>Category: <%= product.category %> </p>
+   </div>
+    <p><%- product.bodyContent %> </p>
     
    </main>
 

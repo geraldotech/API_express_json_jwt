@@ -8,6 +8,8 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0" />
   <title>Express API</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -29,14 +31,19 @@
 
 <nav class="nav">
   <div class="topmenu">
-    <a href="/">Home</a>
+   <span>
+    <a href="/">Home<i class='bx bxs-home' ></i></a>
+    <a href="/products/search/category">Categorias</a>
+   </span>
+<span>
   <% if (!isAuthenticated) { %>
-    <a href="/login">Sign in</a>
+    <a href="/login">Sign in <i class='bx bxs-user' ></i></a>
     <% } %> <% if (isAuthenticated) { %> 
-      
+
       <a href="/dashboard">Dashboard</a>
-      <a href="/logout">sign out</a>
+      <a href="/logout">Sign out<i class='bx bx-log-out' ></i></a>
    <% } %>
+</span>
   </div>
 </nav>
 </header>

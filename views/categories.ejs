@@ -1,0 +1,17 @@
+<title>All categories</title>
+<body>
+  <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
+
+  <main class="single">
+    <ul>
+      <% for(cat of allcats) { %>
+      <li>
+        <a href="/products/search/category?q=<%= cat.toLowerCase() %>"><%= cat %></a>
+      </li>
+      <% }%>
+    </ul>
+  </main>
+
+  <script></script>
+  <%- include('./partials/Footer'); %>
+</body>

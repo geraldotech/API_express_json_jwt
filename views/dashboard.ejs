@@ -46,6 +46,8 @@
       <% const reversedPosts = allpro.map((post) => post).reverse() %>
 
       <div id="listall">
+    
+       
         <% for (let i = 0; i < reversedPosts.length; i++) { %>
         <div class="item">
           <span>
@@ -53,24 +55,50 @@
           </span>
 
           <div>
-            <span class="button smallbtn  <%= reversedPosts[i].published ? 'success' : 'danger' %>">published: <%= reversedPosts[i].published %></span>
-            <span class="button">category: <%= reversedPosts[i].category ? reversedPosts[i].category : 'null' %></span>
+            <span class="button <%= reversedPosts[i].published ? 'success' : 'danger' %>"><i class="bx bx-show-alt"></i>: <%= reversedPosts[i].published %></span>
+            <span class="button smallbtn secondary">
+              <a href="/products/search/category?q=<%= reversedPosts[i].category %>"> <%= reversedPosts[i].category %></a>
+            </span>
           </div>
           <span class="buttons"
             ><a
               href="/dashboard/edit/<%= reversedPosts[i].id %>"
               class="button secondary"
-              >EDIT</a
-            >
+              ><i class="bx bxs-edit"></i
+            ></a>
             <button
               class="button danger"
               data-item="<%= reversedPosts[i].id %>">
-              DELETE
-            </button></span
-          >
+              <i class="bx bxs-trash"></i></button
+          ></span>
         </div>
         <% } %>
       </div>
+
+      <h2>Dialog version: a direct admin view posts</h2>
+
+      <% for(const val of reversedPosts) { %>
+
+      <p>
+        <button
+          id="openModal"
+          data-productid="<%= val.id %>">
+          <%= val.name %> Open dialog
+        </button>
+      </p>
+
+      <% } %>
+
+      <dialog dialog>
+        <h2 id="name"></h2>
+        <p>createdAt: <span id="createdAt"></span></p>
+        <p>
+          Price:<span id="price"></span>
+        </p>
+        <p id="bodyContent"></p>
+
+        <button>Fechar</button>
+      </dialog>
     </main>
 
     <script src="./js/dashboard.js"></script>

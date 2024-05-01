@@ -1,0 +1,26 @@
+<title>Posts by category <%= currentCategory %></title>
+<body>
+  <%- include('./partials/Header', { isAuthenticated: isAuthenticated }); %>
+
+  <main class="single">
+
+    <h2>Posts by category: <%= currentCategory %></h2>
+
+    <% if (postsByCategory && postsByCategory.length === 0) { %>
+    <p>No posts with <%= currentCategory %> or not available </p>
+
+
+    
+    <% } %> <% for(const post of postsByCategory) { %>
+    <h2>
+      <a href="/products/post/<%= post.id %>"><%= post.name %></a>
+    </h2>
+    <p>
+      <span> PostedAt: <%= post.createdAt %> </span>
+    </p>
+    <% } %>
+  </main>
+
+  <script></script>
+  <%- include('./partials/Footer'); %>
+</body>

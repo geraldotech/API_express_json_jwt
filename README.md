@@ -61,11 +61,11 @@ was required a special router, now not, obj is send direct from node server fetc
 
 ```js
 
+- GET /status // server status
 - GET /products // only published itens
 - GET /allproducts // auth router for dashboard
 
 - GET /products/:id
-- GET /status
 - GET /products/post/:id
 
 // example multiple params and optional router
@@ -107,6 +107,8 @@ changes in post, app.put ..., render body in homepage?, single?, edit forms and 
 - /login
 - /dashboard
   - /dashboard/edit
+- /products/post/:id
+  - /products/search/category?q=hardware
 
 ## send to front process.env.BASEURL
 
@@ -120,3 +122,11 @@ changes in post, app.put ..., render body in homepage?, single?, edit forms and 
 [REF](https://www.youtube.com/watch?v=fm4_EuCsQwg)
 
 ## JWT implementation thanks to [ref](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/)
+
+
+## Render as html in ejs
+
+
+To render HTML content within a template using EJS, you should use `<%- %>` tags instead of `<%= %>.` The `<%- %>` tags will interpret the content as raw HTML, allowing it to render the HTML elements properly.
+
+Here's how you can render the bodyContent variable as HTML: `<p>body: <%- product.bodyContent %> </p>`

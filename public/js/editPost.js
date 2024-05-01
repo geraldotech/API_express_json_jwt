@@ -53,6 +53,7 @@ function setLabelTextFromState() {
   published.addEventListener('click', function () {
     publishedStatus = published.checked
     labelText.textContent = publishedStatus ? 'published' : 'unpublished'
+   //labelText.innerHTML = publishedStatus ? `<i class='bx bx-toggle-left' ></i>` : `<i class='bx bxs-toggle-right' ></i>`
   })
 }
 
@@ -134,3 +135,6 @@ mformPU.onsubmit = function () {
     }
   }
 }
+
+
+

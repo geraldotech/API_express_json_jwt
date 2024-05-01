@@ -1,6 +1,7 @@
 /* == toggle production or devmode */
 const Production = location.port != ''
 const baseURL = Production ? 'http://localhost:3001/products/' : 'https://api.gpdev.tech/products/'
+const productsadmin = Production ? 'http://localhost:3001/productsadmin/' : 'https://api.gpdev.tech/productsadmin/'
 
 // document.getElementById('base').href = baseURL
 // document.getElementById('base').innerHTML = baseURL
@@ -10,9 +11,7 @@ const form = document.querySelector('#formCreate')
 const selectCat = document.querySelector('#selectCat')
 
 if (form) {
-
   form.onsubmit = function (event) {
-    
     event.preventDefault()
 
     const ajaxn = new XMLHttpRequest()
@@ -29,13 +28,12 @@ if (form) {
     ajaxn.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
 
     const objData = Object.fromEntries(data)
-    console.log(`json`, objData)
+    // console.log(`json`, objData)
 
     // append the published  obj and boolean value
     objData.published = document.getElementById('published').checked
 
     const json = JSON.stringify(objData)
-
 
     ajaxn.onload = function (e) {
       // Check if the request was a success
@@ -47,8 +45,6 @@ if (form) {
       }
 
       // === get all server response ===
-
-      // == server response ==
 
       const responseData = JSON.parse(ajaxn.response)
       if (!responseData.auth || ajaxn.status === 500) {
@@ -209,3 +205,39 @@ function deleteHandler(id) {
 }
 
 // === DELETE handler ===
+
+/* === DIALOG === */
+
+const btn = document.querySelectorAll('#openModal')
+const dialog = document.querySelector('dialog[dialog]')
+const btnClose = document.querySelector('dialog[dialog] button') // busca o btn dentro da tag dialog
+
+const name = document.querySelector('dialog[dialog] #name')
+const bodyContent = document.querySelector('dialog[dialog] #bodyContent')
+const createdAt = document.querySelector('dialog[dialog] #createdAt')
+const price = document.querySelector('dialog[dialog] #price')
+
+
+
+
+btn.forEach((link) => {
+  link.addEventListener('click', (e) => {
+    dialog.showModal()
+    const id = e.target.dataset.productid
+
+    fetch(`${productsadmin}${id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        name.textContent = data.name
+        bodyContent.innerHTML = data.bodyContent
+        createdAt.textContent = data.createdAt
+        price.textContent = data.price
+      })
+  })
+})
+
+btnClose.onclick = () => dialog.close()
+
+// const productId = document.querySelector("#openModal")
+
+// console.log(productId.dataset.productid)
