@@ -235,6 +235,7 @@ footer {
 
 .single .header{
   padding: .3rem;
+  margin-block: 5px;
   background-color: #333;
 }
 /* Forms create and edit */
