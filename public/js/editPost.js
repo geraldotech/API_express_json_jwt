@@ -1,8 +1,8 @@
 // get baseurl from server in fronend
 const getBASEURL = document.querySelector('p[data-baseurl]').dataset.baseurl
 
-const baseURL =  `${getBASEURL}/products/`
-const productsadmin = `${getBASEURL}/productsadmin/` 
+const baseURL = `${getBASEURL}/products/`
+const productsadmin = `${getBASEURL}/productsadmin/`
 
 function setSelectedOption(value) {
   const selectCat = document.getElementById('selectCat')
@@ -16,6 +16,7 @@ function setSelectedOption(value) {
   }
 }
 
+const goPostPage = document.getElementById('goPostPage')
 const productId = document.getElementById('productId').dataset.id
 const labelText = document.querySelector('[data=publishedstate]')
 
@@ -134,3 +135,7 @@ mformPU.onsubmit = function () {
     }
   }
 }
+
+/* monta a url de post view dinamicamente a partir da BASEURL E PRODUCT ID */
+//goPostPage.href = `${getBASEURL}/products/post/${productId}`
+goPostPage.href = `${getBASEURL}/products/post/${location.href.split('/')[location.href.split('/').length - 1]}`
