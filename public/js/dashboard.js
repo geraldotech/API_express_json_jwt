@@ -209,7 +209,7 @@ function deleteHandler(id) {
 
 /* === DIALOG === */
 
-const btn = document.querySelectorAll('#openModal')
+const btns = document.querySelectorAll('#openModal')
 const dialog = document.querySelector('dialog[dialog]')
 const btnClose = document.querySelector('dialog[dialog] button') // busca o btn dentro da tag dialog
 
@@ -218,14 +218,17 @@ const bodyContent = document.querySelector('dialog[dialog] #bodyContent')
 const createdAt = document.querySelector('dialog[dialog] #createdAt')
 const price = document.querySelector('dialog[dialog] #price')
 
-btn.forEach((link) => {
-  link.addEventListener('click', (e) => {
+btns.forEach((btn) => {
+  // add event click
+  btn.addEventListener('click', (e) => {
     dialog.showModal()
+    // get product id from buttons
     const id = e.target.dataset.productid
 
     fetch(`${productsadmin}${id}`)
       .then((r) => r.json())
       .then((data) => {
+        console.log(data)
         name.textContent = data.name
         bodyContent.innerHTML = data.bodyContent
         createdAt.textContent = data.createdAt

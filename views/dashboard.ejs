@@ -40,14 +40,17 @@
           disabled />
       </form>
       <hr />
-      <div id="listall"></div>
+      <div class="nav_header">       
+          <span>Title</span>
+          <span>Published - Category</span>
+          <span>Actions</span>
+      </div>
 
       <!-- no fetch router need data coming direct -->
       <% const reversedPosts = allpro.map((post) => post).reverse() %>
 
       <div id="listall">
-    
-       
+  
         <% for (let i = 0; i < reversedPosts.length; i++) { %>
         <div class="item">
           <span>

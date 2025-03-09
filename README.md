@@ -6,7 +6,7 @@ This project setup a RestAPI with all methods, no database is used, files are st
 
 - https://http.cat/
 
-## [Live Demo](https://api.gpdev.tech/)
+## [Live Demo](http://168.75.87.178/)
 
 ## :rocket: usage:
 

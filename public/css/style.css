@@ -16,7 +16,7 @@
 header,
 nav,
 html,
-h1, 
+h1,
 body {
   margin: 0;
 }
@@ -192,7 +192,7 @@ main {
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1rem;
   padding: 0.5rem;
-  margin: 0.2rem;
+  margin: 0.2rem 0 ;
   background-color: #333;
   align-items: center;
   & .buttons {
@@ -232,9 +232,8 @@ footer {
   text-align: center;
 }
 
-
-.single .header{
-  padding: .3rem;
+.single .header {
+  padding: 0.3rem;
   margin-block: 5px;
   background-color: #333;
 }
@@ -251,7 +250,6 @@ footer {
   justify-content: space-between;
 }
 
-
 dialog::backdrop {
   background-color: rgb(0 0 0 / 0.3);
 }
@@ -261,4 +259,14 @@ dialog {
   border-radius: 0.5rem;
   box-shadow: 0 0 1em rgb(0 0 0 / 0.3);
   width: 80%;
+}
+
+.nav_header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--primary-color);
+  & span{
+    background-color: gray;
+    padding: 10px;
+  }
 }

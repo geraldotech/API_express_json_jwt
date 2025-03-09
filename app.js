@@ -144,6 +144,7 @@ app.get('/dashboard/delete/:id', (req, res) => {
   res.render('deletePost.ejs', { info: 'Dashboard', isAuthenticated: isAuth, id: id })
 })
 
+/* === PAGINA DO PRODUTO === */
 app.get('/products/post/:id', isAuth, (req, res, next) => {
   const { id, slug } = req.params
   const product = products.find((product) => product.id === id && product.published)
@@ -194,7 +195,7 @@ app.get('/products/:id', (req, res) => {
 
 app.get('/products/search/category/?', async (req, res) => {
   // /products/search/category?q=android
-  const isAuth = req.userId ? true : false 
+  const isAuth = req.userId ? true : false
   const { q } = req.query
 
   if (q) {
@@ -224,6 +225,7 @@ app.get('/login', (req, res) => {
   res.render('login.ejs', {})
 })
 
+/* === POST ROUTER === */
 app.post('/products', verifyJWT, (req, res) => {
   let { name, price, bodyContent, published, category } = req.body
 
@@ -259,6 +261,7 @@ app.post('/products', verifyJWT, (req, res) => {
   return res.status(201).json({ message: 'Product created successfully', product: product })
 })
 
+/* === PUT ROUTER === */
 app.put('/products/:id', verifyJWT, (req, res) => {
   const { id } = req.params
   const { name, price, bodyContent, published, category } = req.body
@@ -279,6 +282,7 @@ app.put('/products/:id', verifyJWT, (req, res) => {
   return res.status(201).send({ message: 'Your product has been updated successfully!' })
 })
 
+/* === DELETE ROUTER === */
 app.delete('/products/:id', verifyJWT, (req, res) => {
   const { id } = req.params
 
@@ -292,9 +296,11 @@ app.delete('/products/:id', verifyJWT, (req, res) => {
   return res.status(200).send({ message: 'Product deleted successfully' })
 })
 
+/* === ROTA PARA TESTES === */
 // example multiple params and optional router
 app.get('/movies/:id?/:value?', movies)
 
+/* === STATUS DO SERVIDOR === */
 app.get('/status', (req, res) => {
   res.json({ status: 201, message: 'SERVER IS ON' })
 })
