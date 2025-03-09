@@ -56,7 +56,7 @@ app.use(
 let products = []
 
 // read json
-fs.readFile('products.json', 'utf-8', (err, data) => {
+fs.readFile('./db/products.json', 'utf-8', (err, data) => {
   if (err) {
     console.log(err)
   } else {
@@ -362,7 +362,7 @@ const helloMiddleware = () => {
 /* === functions === */
 
 function productFile() {
-  fs.writeFile('products.json', JSON.stringify(products), (err) => {
+  fs.writeFile('./db/products.json', JSON.stringify(products), (err) => {
     if (err) {
       console.log(err)
     } else {
