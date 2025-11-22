@@ -100,7 +100,6 @@ app.get('/', isAuth, (req, res, next) => {
 })
 
 // router dashboard and create post
-
 app.get('/dashboard/:action?', verifyJWT, async (req, res) => {
   try {
     const userId = req.query.userId // Retrieve userId from query parameters

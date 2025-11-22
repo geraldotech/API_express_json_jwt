@@ -2,11 +2,11 @@
   "name": "node_test_puro_delet",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch --no-warnings app.js"
+    "start": "node app.js",
+    "dev": "echo Iniciando com watch... && node --watch --watch-preserve-output app.js"
   },
   "author": "",
   "license": "ISC",
